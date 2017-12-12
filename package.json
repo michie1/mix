@@ -1,0 +1,27 @@
+{
+  "name": "mix",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "elm-webpack-loader": "^4.4.0",
+    "file-loader": "^1.1.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "build": "webpack",
+    "watch": "webpack --watch",
+    "dev": "webpack-dev-server --port 3000",
+    "errors": "webpack --display-error-details"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michie1/mix.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/michie1/mix/issues"
+  },
+  "homepage": "https://github.com/michie1/mix#readme"
+}
