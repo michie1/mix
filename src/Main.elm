@@ -32,10 +32,13 @@ type alias Track =
 init : ( Model, Cmd Msg )
 init =
     let
-        track =
-            Track 1 1 "Michiel" "Hoi" "Original Mix"
+        library =
+            [ Track 1 1 "Michiel" "Hoi" "Original Mix"
+            , Track 1 2 "Michiel" "Doei" "Original Mix"
+            , Track 1 3 "Michiel" "Bla" "Original Mix"
+            ]
     in
-        ( { library = [ track ]
+        ( { library = library
           , playlist = []
           , libraryFilter = ""
           , selected = Nothing
@@ -48,7 +51,7 @@ type Msg
     = NoOp
     | AddTrack Int Int
     | RemoveTrack Int
-    | SelectTrack Int Int
+    | ToggleSelection Int Int
     | LibraryFilter String
 
 
@@ -82,6 +85,9 @@ view state =
         , h2 [] [ text "Playlist" ]
         , ul [] <|
             List.map (playlistLi state.selected) (List.Extra.zip (List.range 0 (List.length state.playlist)) state.playlist)
+        , h2 [] [ text "Matches" ]
+        , ul [] <|
+            List.map (matchLi state.selected) (matches state.library state.playlist state.selected)
         ]
 
 
@@ -93,11 +99,41 @@ libraryFilter query =
 libraryLi : Maybe Selected -> Track -> Html Msg
 libraryLi maybeSelected track =
     li
-        [ onClick <| SelectTrack track.cd track.number
+        [ onClick <| ToggleSelection track.cd track.number
         , onDoubleClick <| AddTrack track.cd track.number
         , style [ selectedStyle track maybeSelected ]
         ]
         [ text <| track.artist ++ " - " ++ track.title ++ " (" ++ track.mix ++ ")" ]
+
+
+matchLi : Maybe Selected -> Track -> Html Msg
+matchLi maybeSelected track =
+    li
+        [ onClick <| ToggleSelection track.cd track.number
+        , onDoubleClick <| AddTrack track.cd track.number
+        , style [ selectedStyle track maybeSelected ]
+        ]
+        [ text <| track.artist ++ " - " ++ track.title ++ " (" ++ track.mix ++ ")" ]
+
+
+matches : List Track -> List Track -> Maybe Selected -> List Track
+matches library playlist maybeSelected =
+    case maybeSelected of
+        Just selected ->
+            List.filter
+                (\track ->
+                    List.Extra.notMember track playlist
+                        && case maybeSelected of
+                            Just selected ->
+                                track.cd /= selected.cd || track.number /= selected.number
+
+                            Nothing ->
+                                True
+                        && True
+                )
+                library
+        Nothing ->
+            []
 
 
 selectedStyle : Track -> Maybe Selected -> ( String, String )
@@ -132,7 +168,7 @@ playlistLi maybeSelected index_track =
             Tuple.second index_track
     in
         li
-            [ onClick <| SelectTrack track.cd track.number
+            [ onClick <| ToggleSelection track.cd track.number
             , onDoubleClick <| RemoveTrack index
             , style [ ( "list-style-type", "decimal" ), selectedStyle track maybeSelected ]
             ]
@@ -164,7 +200,7 @@ update msg state =
             in
                 ( { state | playlist = playlist }, Cmd.none )
 
-        SelectTrack cd number ->
+        ToggleSelection cd number ->
             let
                 justSelected =
                     Just
