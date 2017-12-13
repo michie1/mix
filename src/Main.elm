@@ -1,7 +1,7 @@
 module Main exposing (main)
 
 import Html exposing (Html, program, text, div, ul, li, h2, input)
-import Html.Events exposing (onClick, onInput)
+import Html.Events exposing (onClick, onDoubleClick, onInput)
 import Html.Attributes exposing (style, value)
 import List.Extra
 
@@ -10,6 +10,13 @@ type alias Model =
     { library : List Track
     , playlist : List Track
     , libraryFilter : String
+    , selected : Maybe Selected
+    }
+
+
+type alias Selected =
+    { cd : Int
+    , number : Int
     }
 
 
@@ -31,6 +38,7 @@ init =
         ( { library = [ track ]
           , playlist = []
           , libraryFilter = ""
+          , selected = Nothing
           }
         , Cmd.none
         )
@@ -38,23 +46,28 @@ init =
 
 type Msg
     = NoOp
+    | AddTrack Int Int
+    | RemoveTrack Int
     | SelectTrack Int Int
-    | DeselectTrack Int
     | LibraryFilter String
+
 
 iContains : String -> String -> Bool
 iContains a b =
     String.contains (String.toLower a) (String.toLower b)
 
+
 filter : String -> List Track -> List Track
 filter query tracks =
     List.filter
-        (\track -> String.trim query == "" ||
-                   iContains query (toString track.cd) ||
-                   iContains query (toString track.number) ||
-                   iContains query track.artist ||
-                   iContains query track.title ||
-                   iContains query track.mix
+        (\track ->
+            String.trim query
+                == ""
+                || iContains query (toString track.cd)
+                || iContains query (toString track.number)
+                || iContains query track.artist
+                || iContains query track.title
+                || iContains query track.mix
         )
         tracks
 
@@ -65,10 +78,10 @@ view state =
         [ h2 [] [ text "Library" ]
         , libraryFilter state.libraryFilter
         , ul [] <|
-            List.map libraryLi (filter state.libraryFilter state.library)
+            List.map (libraryLi state.selected) (filter state.libraryFilter state.library)
         , h2 [] [ text "Playlist" ]
         , ul [] <|
-            List.map playlistLi (List.Extra.zip (List.range 0 (List.length state.playlist)) state.playlist)
+            List.map (playlistLi state.selected) (List.Extra.zip (List.range 0 (List.length state.playlist)) state.playlist)
         ]
 
 
@@ -77,13 +90,40 @@ libraryFilter query =
     input [ value query, onInput LibraryFilter ] []
 
 
-libraryLi : Track -> Html Msg
-libraryLi track =
-    li [ onClick <| SelectTrack track.cd track.number ] [ text <| track.artist ++ " - " ++ track.title ++ " (" ++ track.mix ++ ")" ]
+libraryLi : Maybe Selected -> Track -> Html Msg
+libraryLi maybeSelected track =
+    li
+        [ onClick <| SelectTrack track.cd track.number
+        , onDoubleClick <| AddTrack track.cd track.number
+        , style [ selectedStyle track maybeSelected ]
+        ]
+        [ text <| track.artist ++ " - " ++ track.title ++ " (" ++ track.mix ++ ")" ]
 
 
-playlistLi : ( Int, Track ) -> Html Msg
-playlistLi index_track =
+selectedStyle : Track -> Maybe Selected -> ( String, String )
+selectedStyle track maybeSelected =
+    let
+        isSelected =
+            case maybeSelected of
+                Just selected ->
+                    selected.cd
+                        == track.cd
+                        && selected.number
+                        == track.number
+
+                Nothing ->
+                    False
+    in
+        case isSelected of
+            True ->
+                ( "border", "1px solid red" )
+
+            False ->
+                ( "border", "1px solid black" )
+
+
+playlistLi : Maybe Selected -> ( Int, Track ) -> Html Msg
+playlistLi maybeSelected index_track =
     let
         index =
             Tuple.first index_track
@@ -91,13 +131,18 @@ playlistLi index_track =
         track =
             Tuple.second index_track
     in
-        li [ onClick <| DeselectTrack index, style [ ( "list-style-type", "decimal" ) ] ] [ text <| track.artist ++ " - " ++ track.title ++ " (" ++ track.mix ++ ")" ]
+        li
+            [ onClick <| SelectTrack track.cd track.number
+            , onDoubleClick <| RemoveTrack index
+            , style [ ( "list-style-type", "decimal" ), selectedStyle track maybeSelected ]
+            ]
+            [ text <| track.artist ++ " - " ++ track.title ++ " (" ++ track.mix ++ ")" ]
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg state =
     case msg of
-        SelectTrack cd number ->
+        AddTrack cd number ->
             let
                 playlist =
                     case
@@ -112,14 +157,33 @@ update msg state =
             in
                 ( { state | playlist = playlist }, Cmd.none )
 
-        DeselectTrack index ->
+        RemoveTrack index ->
             let
                 playlist =
                     List.Extra.removeAt index state.playlist
-
-                -- List.filter (\t -> t.cd /= cd || t.number /= t.number) state.library
             in
                 ( { state | playlist = playlist }, Cmd.none )
+
+        SelectTrack cd number ->
+            let
+                justSelected =
+                    Just
+                        { cd = cd
+                        , number = number
+                        }
+
+                selected =
+                    case state.selected of
+                        Just selected ->
+                            if selected.cd == cd && selected.number == number then
+                                Nothing
+                            else
+                                justSelected
+
+                        Nothing ->
+                            justSelected
+            in
+                ( { state | selected = selected }, Cmd.none )
 
         LibraryFilter query ->
             ( { state | libraryFilter = query }, Cmd.none )
