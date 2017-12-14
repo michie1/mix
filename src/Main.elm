@@ -1,10 +1,11 @@
 module Main exposing (main)
 
-import Html exposing (Html, Attribute, program, text, div, span, ul, li, h2, input)
+import Html exposing (Html, Attribute, program, text, div, span, ul, li, h2, input, button)
 import Html.Events exposing (onWithOptions, onClick, onInput)
 import Html.Attributes exposing (style, value)
 import List.Extra
 import Json.Decode
+import Http
 
 
 type alias Model =
@@ -36,19 +37,12 @@ type alias Track =
 
 init : ( Model, Cmd Msg )
 init =
-    let
-        library =
-            [ Track 1 1 "Michiel" "Hoi" "Original Mix" 130 1 A
-            , Track 1 2 "Michiel" "Doei" "Original Mix" 130 2 A
-            , Track 1 3 "Michiel" "Bla" "Original Mix" 130 3 A
-            ]
-    in
-        ( { library = library
-          , playlist = []
-          , libraryFilter = ""
-          , selected = Nothing
-          }
-        , Cmd.none
+    ( { library = []
+    , playlist = []
+    , libraryFilter = ""
+    , selected = Nothing
+    }
+        , loadTracks
         )
 
 
@@ -58,6 +52,8 @@ type Msg
     | RemoveTrack Int
     | ToggleSelection Track
     | LibraryFilter String
+    | LoadTracks
+    | LoadedTracks (Result Http.Error (List Track))
 
 
 iContains : String -> String -> Bool
@@ -108,7 +104,7 @@ libraryLi maybeSelected track =
           --, onDoubleClickWithPreventDefault <| AddTrack track.cd track.number
           style [ selectedStyle track maybeSelected ]
         ]
-        [ span [ onClick <| ToggleSelection track ] [ text <| track.artist ++ " - " ++ track.title ++ " (" ++ track.mix ++ ")" ]
+        [ span [ onClick <| ToggleSelection track ] [ text <| track.artist ++ " - " ++ track.title ++ " (" ++ track.mix ++ ")" ++ " " ++ toString track.keyNumber ++ toString track.keyType ++ toString track.bpm ]
         , span [ onClick <| AddTrack track.cd track.number ] [ text "+" ]
         ]
 
@@ -129,17 +125,21 @@ matches library playlist maybeSelected =
         Just selected ->
             List.filter
                 (\track ->
-                    List.Extra.notMember track playlist
-                        && case maybeSelected of
-                            Just selected ->
-                                track.cd /= selected.cd || track.number /= selected.number
+                    let
+                      similar = 
+                        ((track.keyNumber == selected.keyNumber && track.keyType == selected.keyType && (diff track.bpm selected.bpm) <= 2)
+                                || (track.bpm == selected.bpm && track.keyNumber == selected.keyNumber)
+                                || (track.keyType == selected.keyType && track.bpm == selected.bpm && (diff track.keyNumber selected.keyNumber) <= 2)
+                        )
+                    in
+                        List.Extra.notMember track playlist
+                            && case maybeSelected of
+                                Just selected ->
+                                    track.cd /= selected.cd || track.number /= selected.number
+                                    && similar
 
-                            Nothing ->
-                                True
-                                    && ((track.keyNumber == selected.keyNumber && track.keyType == selected.keyType && (diff track.bpm selected.bpm) <= 2)
-                                            || (track.bpm == selected.bpm && track.keyNumber == selected.keyNumber)
-                                            || (track.keyType == selected.keyType && track.bpm == selected.bpm && (diff track.keyNumber selected.keyNumber) <= 2)
-                                       )
+                                Nothing ->
+                                  similar
                 )
                 library
 
@@ -193,7 +193,7 @@ playlistLi maybeSelected index_track =
         li
             [ style [ ( "list-style-type", "decimal" ), selectedStyle track maybeSelected ] ]
             [ span [ onClick <| ToggleSelection track ] [ text <| track.artist ++ " - " ++ track.title ++ " (" ++ track.mix ++ ")" ]
-            , span [ onClick <| RemoveTrack index ] [ text "+" ]
+            , span [ onClick <| RemoveTrack index ] [ text "-" ]
             ]
 
 
@@ -243,6 +243,16 @@ update msg state =
         LibraryFilter query ->
             ( { state | libraryFilter = query }, Cmd.none )
 
+        LoadTracks ->
+            ( state, loadTracks )
+
+        LoadedTracks resultTracks ->
+            case resultTracks of
+                Ok tracks ->
+                    ( { state | library = tracks }, Cmd.none )
+                Err e ->
+                    ( state, Cmd.none )
+
         NoOp ->
             ( state, Cmd.none )
 
@@ -260,3 +270,38 @@ main =
         , subscriptions = subscriptions
         , view = view
         }
+
+loadTracks : Cmd Msg
+loadTracks =
+    Http.send LoadedTracks (Http.get "static/tracks.json" tracksDecoder)
+
+keyType : String -> KeyType
+keyType value =
+    case value of
+        "A" ->
+            A
+        _ ->
+            B
+
+keyTypeDecoder : String -> Json.Decode.Decoder KeyType
+keyTypeDecoder value =
+    Json.Decode.succeed (keyType value)
+
+trackDecoder : Json.Decode.Decoder Track
+trackDecoder =
+    Json.Decode.map8
+        Track
+        (Json.Decode.field "cd" Json.Decode.int)
+        (Json.Decode.field "number" Json.Decode.int)
+        (Json.Decode.field "artist" Json.Decode.string)
+        (Json.Decode.field "title" Json.Decode.string)
+        (Json.Decode.field "remix" Json.Decode.string)
+        (Json.Decode.field "bpm" Json.Decode.int)
+        (Json.Decode.field "keyNumber" Json.Decode.int)
+        (Json.Decode.field "keyType"
+            (Json.Decode.andThen keyTypeDecoder Json.Decode.string)
+        )
+
+tracksDecoder : Json.Decode.Decoder (List Track)
+tracksDecoder =
+    Json.Decode.at ["tracks"] (Json.Decode.list trackDecoder)
