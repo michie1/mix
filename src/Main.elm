@@ -38,12 +38,12 @@ type alias Track =
 init : ( Model, Cmd Msg )
 init =
     ( { library = []
-    , playlist = []
-    , libraryFilter = ""
-    , selected = Nothing
-    }
-        , loadTracks
-        )
+      , playlist = []
+      , libraryFilter = ""
+      , selected = Nothing
+      }
+    , loadTracks
+    )
 
 
 type Msg
@@ -114,7 +114,7 @@ matchLi maybeSelected track =
     li
         [ style [ selectedStyle track maybeSelected ] ]
         [ span [ onClick <| ToggleSelection track ]
-               [ text <| track.artist ++ " - " ++ track.title ++ " (" ++ track.mix ++ ")" ]
+            [ text <| track.artist ++ " - " ++ track.title ++ " (" ++ track.mix ++ ")" ]
         , span [ onClick <| AddTrack track.cd track.number ] [ text "+" ]
         ]
 
@@ -126,20 +126,23 @@ matches library playlist maybeSelected =
             List.filter
                 (\track ->
                     let
-                      similar = 
-                        ((track.keyNumber == selected.keyNumber && track.keyType == selected.keyType && (diff track.bpm selected.bpm) <= 2)
+                        similar =
+                            ((track.keyNumber == selected.keyNumber && track.keyType == selected.keyType && (diff track.bpm selected.bpm) <= 2)
                                 || (track.bpm == selected.bpm && track.keyNumber == selected.keyNumber)
                                 || (track.keyType == selected.keyType && track.bpm == selected.bpm && (diff track.keyNumber selected.keyNumber) <= 2)
-                        )
+                            )
                     in
                         List.Extra.notMember track playlist
                             && case maybeSelected of
                                 Just selected ->
-                                    track.cd /= selected.cd || track.number /= selected.number
-                                    && similar
+                                    track.cd
+                                        /= selected.cd
+                                        || track.number
+                                        /= selected.number
+                                        && similar
 
                                 Nothing ->
-                                  similar
+                                    similar
                 )
                 library
 
@@ -205,7 +208,7 @@ update msg state =
                 playlist =
                     case
                         state.library
-                            |> List.Extra.find (\t -> t.cd == cd && t.number == t.number)
+                            |> List.Extra.find (\t -> t.cd == cd && t.number == number)
                     of
                         Just track ->
                             List.append state.playlist [ track ]
@@ -250,6 +253,7 @@ update msg state =
             case resultTracks of
                 Ok tracks ->
                     ( { state | library = tracks }, Cmd.none )
+
                 Err e ->
                     ( state, Cmd.none )
 
@@ -271,21 +275,26 @@ main =
         , view = view
         }
 
+
 loadTracks : Cmd Msg
 loadTracks =
     Http.send LoadedTracks (Http.get "static/tracks.json" tracksDecoder)
+
 
 keyType : String -> KeyType
 keyType value =
     case value of
         "A" ->
             A
+
         _ ->
             B
+
 
 keyTypeDecoder : String -> Json.Decode.Decoder KeyType
 keyTypeDecoder value =
     Json.Decode.succeed (keyType value)
+
 
 trackDecoder : Json.Decode.Decoder Track
 trackDecoder =
@@ -302,6 +311,7 @@ trackDecoder =
             (Json.Decode.andThen keyTypeDecoder Json.Decode.string)
         )
 
+
 tracksDecoder : Json.Decode.Decoder (List Track)
 tracksDecoder =
-    Json.Decode.at ["tracks"] (Json.Decode.list trackDecoder)
+    Json.Decode.at [ "tracks" ] (Json.Decode.list trackDecoder)
