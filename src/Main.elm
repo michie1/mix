@@ -1,19 +1,26 @@
 module Main exposing (main)
 
-import Html exposing (Html, program, text, div, ul, li, h2, input)
-import Html.Events exposing (onClick, onDoubleClick, onInput)
+import Html exposing (Html, Attribute, program, text, div, span, ul, li, h2, input)
+import Html.Events exposing (onWithOptions, onClick, onInput)
 import Html.Attributes exposing (style, value)
 import List.Extra
+import Json.Decode
 
 
 type alias Model =
     { library : List Track
     , playlist : List Track
     , libraryFilter : String
-    , selected : Maybe Track -- TODO: use index?
+    , selected :
+        Maybe Track
+        -- TODO: use index?
     }
 
-type KeyType = A | B
+
+type KeyType
+    = A
+    | B
+
 
 type alias Track =
     { cd : Int
@@ -97,21 +104,23 @@ libraryFilter query =
 libraryLi : Maybe Track -> Track -> Html Msg
 libraryLi maybeSelected track =
     li
-        [ onClick <| ToggleSelection track
-        , onDoubleClick <| AddTrack track.cd track.number
-        , style [ selectedStyle track maybeSelected ]
+        [ --[ onClick <| ToggleSelection track
+          --, onDoubleClickWithPreventDefault <| AddTrack track.cd track.number
+          style [ selectedStyle track maybeSelected ]
         ]
-        [ text <| track.artist ++ " - " ++ track.title ++ " (" ++ track.mix ++ ")" ]
+        [ span [ onClick <| ToggleSelection track ] [ text <| track.artist ++ " - " ++ track.title ++ " (" ++ track.mix ++ ")" ]
+        , span [ onClick <| AddTrack track.cd track.number ] [ text "+" ]
+        ]
 
 
 matchLi : Maybe Track -> Track -> Html Msg
 matchLi maybeSelected track =
     li
-        [ onClick <| ToggleSelection track
-        , onDoubleClick <| AddTrack track.cd track.number
-        , style [ selectedStyle track maybeSelected ]
+        [ style [ selectedStyle track maybeSelected ] ]
+        [ span [ onClick <| ToggleSelection track ]
+               [ text <| track.artist ++ " - " ++ track.title ++ " (" ++ track.mix ++ ")" ]
+        , span [ onClick <| AddTrack track.cd track.number ] [ text "+" ]
         ]
-        [ text <| track.artist ++ " - " ++ track.title ++ " (" ++ track.mix ++ ")" ]
 
 
 matches : List Track -> List Track -> Maybe Track -> List Track
@@ -127,19 +136,22 @@ matches library playlist maybeSelected =
 
                             Nothing ->
                                 True
-                        && ((track.keyNumber == selected.keyNumber && track.keyType == selected.keyType && (diff track.bpm selected.bpm) <= 2)
-                            || (track.bpm == selected.bpm && track.keyNumber == selected.keyNumber)
-                            || (track.keyType == selected.keyType && track.bpm == selected.bpm && (diff track.keyNumber selected.keyNumber) <= 2)
-                            )
+                                    && ((track.keyNumber == selected.keyNumber && track.keyType == selected.keyType && (diff track.bpm selected.bpm) <= 2)
+                                            || (track.bpm == selected.bpm && track.keyNumber == selected.keyNumber)
+                                            || (track.keyType == selected.keyType && track.bpm == selected.bpm && (diff track.keyNumber selected.keyNumber) <= 2)
+                                       )
                 )
                 library
+
         Nothing ->
             []
+
 
 diff : Int -> Int -> Int
 diff a b =
     let
-        d = a - b
+        d =
+            a - b
     in
         if d > 0 then
             d
@@ -179,11 +191,10 @@ playlistLi maybeSelected index_track =
             Tuple.second index_track
     in
         li
-            [ onClick <| ToggleSelection track
-            , onDoubleClick <| RemoveTrack index
-            , style [ ( "list-style-type", "decimal" ), selectedStyle track maybeSelected ]
+            [ style [ ( "list-style-type", "decimal" ), selectedStyle track maybeSelected ] ]
+            [ span [ onClick <| ToggleSelection track ] [ text <| track.artist ++ " - " ++ track.title ++ " (" ++ track.mix ++ ")" ]
+            , span [ onClick <| RemoveTrack index ] [ text "+" ]
             ]
-            [ text <| track.artist ++ " - " ++ track.title ++ " (" ++ track.mix ++ ")" ]
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
