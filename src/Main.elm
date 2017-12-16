@@ -29,7 +29,7 @@ type alias Track =
     , artist : String
     , title : String
     , mix : String
-    , bpm : Int
+    , bpm : Float
     , keyNumber : Int
     , keyType : KeyType
     }
@@ -67,11 +67,18 @@ filter query tracks =
         (\track ->
             String.trim query
                 == ""
-                || iContains query (toString track.cd)
-                || iContains query (toString track.number)
-                || iContains query track.artist
-                || iContains query track.title
-                || iContains query track.mix
+                || ( iContains query <|
+                    String.join ""
+                        [ (toString track.cd)
+                        , (toString track.number)
+                        , track.artist
+                        , track.title
+                        , track.mix
+                        , (toString track.bpm)
+                        , (toString track.keyNumber)
+                        , (toString track.keyType)
+                        ]
+                    )
         )
         tracks
 
@@ -113,8 +120,7 @@ matchLi : Maybe Track -> Track -> Html Msg
 matchLi maybeSelected track =
     li
         [ style [ selectedStyle track maybeSelected ] ]
-        [ span [ onClick <| ToggleSelection track ]
-            [ text <| track.artist ++ " - " ++ track.title ++ " (" ++ track.mix ++ ")" ]
+        [ span [ onClick <| ToggleSelection track ] [ text <| track.artist ++ " - " ++ track.title ++ " (" ++ track.mix ++ ")" ++ " " ++ toString track.keyNumber ++ toString track.keyType ++ toString track.bpm ]
         , span [ onClick <| AddTrack track.cd track.number ] [ text "+" ]
         ]
 
@@ -127,7 +133,7 @@ matches library playlist maybeSelected =
                 (\track ->
                     let
                         similar =
-                            ((track.keyNumber == selected.keyNumber && track.keyType == selected.keyType && (diff track.bpm selected.bpm) <= 2)
+                            ((track.keyNumber == selected.keyNumber && track.keyType == selected.keyType && (diffFloat track.bpm selected.bpm) <= 2.0)
                                 || (track.bpm == selected.bpm && track.keyNumber == selected.keyNumber)
                                 || (track.keyType == selected.keyType && track.bpm == selected.bpm && (diff track.keyNumber selected.keyNumber) <= 2)
                             )
@@ -135,10 +141,7 @@ matches library playlist maybeSelected =
                         List.Extra.notMember track playlist
                             && case maybeSelected of
                                 Just selected ->
-                                    track.cd
-                                        /= selected.cd
-                                        || track.number
-                                        /= selected.number
+                                    (track.cd /= selected.cd || track.number /= selected.number)
                                         && similar
 
                                 Nothing ->
@@ -161,6 +164,16 @@ diff a b =
         else
             d * -1
 
+diffFloat : Float -> Float -> Float
+diffFloat a b =
+    let
+        d =
+            a - b
+    in
+        if d > 0 then
+            d
+        else
+            d * -1
 
 selectedStyle : Track -> Maybe Track -> ( String, String )
 selectedStyle track maybeSelected =
@@ -181,7 +194,7 @@ selectedStyle track maybeSelected =
                 ( "border", "1px solid red" )
 
             False ->
-                ( "border", "1px solid black" )
+                ( "border", "1px solid white" )
 
 
 playlistLi : Maybe Track -> ( Int, Track ) -> Html Msg
@@ -255,7 +268,10 @@ update msg state =
                     ( { state | library = tracks }, Cmd.none )
 
                 Err e ->
-                    ( state, Cmd.none )
+                    let
+                        _ = Debug.log "err e" e
+                    in
+                        ( state, Cmd.none )
 
         NoOp ->
             ( state, Cmd.none )
@@ -305,7 +321,7 @@ trackDecoder =
         (Json.Decode.field "artist" Json.Decode.string)
         (Json.Decode.field "title" Json.Decode.string)
         (Json.Decode.field "remix" Json.Decode.string)
-        (Json.Decode.field "bpm" Json.Decode.int)
+        (Json.Decode.field "bpm" Json.Decode.float)
         (Json.Decode.field "keyNumber" Json.Decode.int)
         (Json.Decode.field "keyType"
             (Json.Decode.andThen keyTypeDecoder Json.Decode.string)
