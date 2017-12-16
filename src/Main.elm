@@ -67,18 +67,18 @@ filter query tracks =
         (\track ->
             String.trim query
                 == ""
-                || ( iContains query <|
-                    String.join ""
-                        [ (toString track.cd)
-                        , (toString track.number)
-                        , track.artist
-                        , track.title
-                        , track.mix
-                        , (toString track.bpm)
-                        , (toString track.keyNumber)
-                        , (toString track.keyType)
-                        ]
-                    )
+                || (iContains query <|
+                        String.join ""
+                            [ (toString track.cd)
+                            , (toString track.number)
+                            , track.artist
+                            , track.title
+                            , track.mix
+                            , (toString track.keyNumber)
+                            , (toString track.keyType)
+                            , (toString track.bpm)
+                            ]
+                   )
         )
         tracks
 
@@ -111,7 +111,23 @@ libraryLi maybeSelected track =
           --, onDoubleClickWithPreventDefault <| AddTrack track.cd track.number
           style [ selectedStyle track maybeSelected ]
         ]
-        [ span [ onClick <| ToggleSelection track ] [ text <| track.artist ++ " - " ++ track.title ++ " (" ++ track.mix ++ ")" ++ " " ++ toString track.keyNumber ++ toString track.keyType ++ toString track.bpm ]
+        [ span [ onClick <| ToggleSelection track ]
+            [ text <|
+                toString track.cd
+                    ++ "#"
+                    ++ toString track.number
+                    ++ " "
+                    ++ track.artist
+                    ++ " - "
+                    ++ track.title
+                    ++ " ("
+                    ++ track.mix
+                    ++ ")"
+                    ++ " "
+                    ++ toString track.keyNumber
+                    ++ toString track.keyType
+                    ++ toString track.bpm
+            ]
         , span [ onClick <| AddTrack track.cd track.number ] [ text "+" ]
         ]
 
@@ -120,7 +136,23 @@ matchLi : Maybe Track -> Track -> Html Msg
 matchLi maybeSelected track =
     li
         [ style [ selectedStyle track maybeSelected ] ]
-        [ span [ onClick <| ToggleSelection track ] [ text <| track.artist ++ " - " ++ track.title ++ " (" ++ track.mix ++ ")" ++ " " ++ toString track.keyNumber ++ toString track.keyType ++ toString track.bpm ]
+        [ span [ onClick <| ToggleSelection track ]
+            [ text <|
+                toString track.cd
+                    ++ "#"
+                    ++ toString track.number
+                    ++ " "
+                    ++ track.artist
+                    ++ " - "
+                    ++ track.title
+                    ++ " ("
+                    ++ track.mix
+                    ++ ")"
+                    ++ " "
+                    ++ toString track.keyNumber
+                    ++ toString track.keyType
+                    ++ toString track.bpm
+            ]
         , span [ onClick <| AddTrack track.cd track.number ] [ text "+" ]
         ]
 
@@ -133,9 +165,9 @@ matches library playlist maybeSelected =
                 (\track ->
                     let
                         similar =
-                            ((track.keyNumber == selected.keyNumber && track.keyType == selected.keyType && (diffFloat track.bpm selected.bpm) <= 2.0)
+                            ((track.keyNumber == selected.keyNumber && track.keyType == selected.keyType && (diffBpm track.bpm selected.bpm) <= 2.0)
                                 || (track.bpm == selected.bpm && track.keyNumber == selected.keyNumber)
-                                || (track.keyType == selected.keyType && track.bpm == selected.bpm && (diff track.keyNumber selected.keyNumber) <= 2)
+                                || (track.keyType == selected.keyType && track.bpm == selected.bpm && (diffKeyNumber track.keyNumber selected.keyNumber) <= 2)
                             )
                     in
                         List.Extra.notMember track playlist
@@ -153,8 +185,40 @@ matches library playlist maybeSelected =
             []
 
 
-diff : Int -> Int -> Int
-diff a b =
+diffKeyNumber : Int -> Int -> Int
+diffKeyNumber a b =
+    let
+        d =
+            case ( a, b ) of
+                ( 1, 12 ) ->
+                    1
+
+                ( 12, 1 ) ->
+                    1
+
+                ( 1, 11 ) ->
+                    2
+
+                ( 11, 1 ) ->
+                    2
+
+                ( 2, 12 ) ->
+                    2
+
+                ( 12, 2 ) ->
+                    2
+
+                _ ->
+                    a - b
+    in
+        if d > 0 then
+            d
+        else
+            d * -1
+
+
+diffBpm : Float -> Float -> Float
+diffBpm a b =
     let
         d =
             a - b
@@ -164,16 +228,6 @@ diff a b =
         else
             d * -1
 
-diffFloat : Float -> Float -> Float
-diffFloat a b =
-    let
-        d =
-            a - b
-    in
-        if d > 0 then
-            d
-        else
-            d * -1
 
 selectedStyle : Track -> Maybe Track -> ( String, String )
 selectedStyle track maybeSelected =
@@ -208,7 +262,23 @@ playlistLi maybeSelected index_track =
     in
         li
             [ style [ ( "list-style-type", "decimal" ), selectedStyle track maybeSelected ] ]
-            [ span [ onClick <| ToggleSelection track ] [ text <| track.artist ++ " - " ++ track.title ++ " (" ++ track.mix ++ ")" ]
+            [ span [ onClick <| ToggleSelection track ]
+                [ text <|
+                    toString track.cd
+                        ++ "#"
+                        ++ toString track.number
+                        ++ " "
+                        ++ track.artist
+                        ++ " - "
+                        ++ track.title
+                        ++ " ("
+                        ++ track.mix
+                        ++ ")"
+                        ++ " "
+                        ++ toString track.keyNumber
+                        ++ toString track.keyType
+                        ++ toString track.bpm
+                ]
             , span [ onClick <| RemoveTrack index ] [ text "-" ]
             ]
 
@@ -257,7 +327,7 @@ update msg state =
                 ( { state | selected = selected }, Cmd.none )
 
         LibraryFilter query ->
-            ( { state | libraryFilter = query }, Cmd.none )
+            ( { state | libraryFilter = query, selected = Nothing }, Cmd.none )
 
         LoadTracks ->
             ( state, loadTracks )
@@ -269,7 +339,8 @@ update msg state =
 
                 Err e ->
                     let
-                        _ = Debug.log "err e" e
+                        _ =
+                            Debug.log "err e" e
                     in
                         ( state, Cmd.none )
 
