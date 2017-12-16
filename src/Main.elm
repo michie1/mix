@@ -35,6 +35,13 @@ type alias Track =
     }
 
 
+type alias PlaylistTrack =
+    { index : Int
+    , track : Track
+    , bpmAdjustment : Float
+    }
+
+
 init : ( Model, Cmd Msg )
 init =
     ( { library = []
@@ -92,11 +99,26 @@ view state =
             List.map (libraryLi state.selected) (filter state.libraryFilter state.library)
         , h2 [] [ text "Playlist" ]
         , ul [] <|
-            List.map (playlistLi state.selected) (List.Extra.zip (List.range 0 (List.length state.playlist)) state.playlist)
+            List.map (playlistLi state.selected) (playlist state.playlist)
         , h2 [] [ text "Matches" ]
         , ul [] <|
             List.map (matchLi state.selected) (matches state.library state.playlist state.selected)
         ]
+
+
+playlist : List Track -> List PlaylistTrack
+playlist tracks =
+    let
+        indexTracks =
+            List.Extra.zip
+                (List.range 0 (List.length tracks))
+                tracks
+    in
+        List.map
+            (\indexTrack ->
+                PlaylistTrack (Tuple.first indexTrack) (Tuple.second indexTrack) (toFloat (Tuple.first indexTrack))
+            )
+            indexTracks
 
 
 libraryFilter : String -> Html Msg
@@ -251,14 +273,17 @@ selectedStyle track maybeSelected =
                 ( "border", "1px solid white" )
 
 
-playlistLi : Maybe Track -> ( Int, Track ) -> Html Msg
-playlistLi maybeSelected index_track =
+playlistLi : Maybe Track -> PlaylistTrack -> Html Msg
+playlistLi maybeSelected playlistTrack =
     let
         index =
-            Tuple.first index_track
+            playlistTrack.index
 
         track =
-            Tuple.second index_track
+            playlistTrack.track
+
+        bpmAdjustment =
+            playlistTrack.bpmAdjustment
     in
         li
             [ style [ ( "list-style-type", "decimal" ), selectedStyle track maybeSelected ] ]
@@ -278,6 +303,9 @@ playlistLi maybeSelected index_track =
                         ++ toString track.keyNumber
                         ++ toString track.keyType
                         ++ toString track.bpm
+                        ++ " "
+                        ++ toString bpmAdjustment
+                        ++ "%"
                 ]
             , span [ onClick <| RemoveTrack index ] [ text "-" ]
             ]
