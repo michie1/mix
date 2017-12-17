@@ -38,7 +38,8 @@ type alias Track =
 type alias PlaylistTrack =
     { index : Int
     , track : Track
-    , bpmAdjustment : Float
+    , endPitch : Float
+    , beginPitch : Float
     }
 
 
@@ -108,17 +109,72 @@ view state =
 
 playlist : List Track -> List PlaylistTrack
 playlist tracks =
-    let
-        indexTracks =
-            List.Extra.zip
-                (List.range 0 (List.length tracks))
-                tracks
-    in
-        List.map
+    List.indexedMap (,) tracks
+        |> List.map
             (\indexTrack ->
-                PlaylistTrack (Tuple.first indexTrack) (Tuple.second indexTrack) (toFloat (Tuple.first indexTrack))
+                PlaylistTrack (Tuple.first indexTrack) (Tuple.second indexTrack) 0.0 0.0
             )
-            indexTracks
+        |> setEndPitch
+        |> setBeginPitch
+
+
+setEndPitch : List PlaylistTrack -> List PlaylistTrack
+setEndPitch playlistTracks =
+    List.indexedMap
+        (\index playlistTrack ->
+            case List.Extra.getAt (index + 1) playlistTracks of
+                Just next ->
+                    let
+                        track =
+                            playlistTrack.track
+
+                        endPitch =
+                            (targetAdjustment track.bpm (targetBpm track.bpm next.track.bpm))
+                    in
+                        { playlistTrack | endPitch = endPitch }
+
+                Nothing ->
+                    playlistTrack
+        )
+        playlistTracks
+
+
+setBeginPitch : List PlaylistTrack -> List PlaylistTrack
+setBeginPitch playlistTracks =
+    List.indexedMap
+        (\index playlistTrack ->
+            case List.Extra.getAt (index - 1) playlistTracks of
+                Just next ->
+                    let
+                        track =
+                            playlistTrack.track
+
+                        beginPitch =
+                            (targetAdjustment track.bpm (targetBpm track.bpm next.track.bpm))
+                    in
+                        { playlistTrack | beginPitch = beginPitch }
+
+                Nothing ->
+                    playlistTrack
+        )
+        playlistTracks
+
+
+targetBpm : Float -> Float -> Float
+targetBpm a b =
+    let
+        avg =
+            (a - b) / 2.0 + b
+    in
+        if (avg |> round |> toFloat) == avg then
+            avg - 0.5
+        else
+            avg
+
+
+targetAdjustment : Float -> Float -> Float
+targetAdjustment begin end =
+    (end / begin) - 1
 
 
 libraryFilter : String -> Html Msg
@@ -282,8 +338,11 @@ playlistLi maybeSelected playlistTrack =
         track =
             playlistTrack.track
 
-        bpmAdjustment =
-            playlistTrack.bpmAdjustment
+        beginPitch =
+            playlistTrack.beginPitch
+
+        endPitch =
+            playlistTrack.endPitch
     in
         li
             [ style [ ( "list-style-type", "decimal" ), selectedStyle track maybeSelected ] ]
@@ -304,11 +363,41 @@ playlistLi maybeSelected playlistTrack =
                         ++ toString track.keyType
                         ++ toString track.bpm
                         ++ " "
-                        ++ toString bpmAdjustment
+                        ++ formatPitch beginPitch
+                        ++ "%"
+                        ++ " -> "
+                        ++ formatPitch endPitch
                         ++ "%"
                 ]
             , span [ onClick <| RemoveTrack index ] [ text "-" ]
             ]
+
+
+formatPitch : Float -> String
+formatPitch pitch =
+    case pitch of
+        0.0 ->
+            "0.00"
+
+        _ ->
+            pitch
+                |> (*) 100
+                -- To percentage
+                |>
+                    (*) 100
+                -- Begin round to even decimals
+                |>
+                    flip (/) 2.0
+                |> round
+                |> (*) 2
+                -- End round to even decimals
+                -- Begin rounding 2 decimals
+                |>
+                    toFloat
+                |> flip (/) 100.0
+                -- End rounding
+                |>
+                    toString
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
