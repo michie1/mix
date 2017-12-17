@@ -1,0 +1,2075 @@
+{
+  "tracks": 
+[
+  {
+    "cd": 42,
+    "number": 1,
+    "artist": "Ciro Visione",
+    "title": "Again The Sun",
+    "remix": "Original Mix",
+    "bpm": 137,
+    "keyNumber": 7,
+    "keyType": "B"
+  },
+  {
+    "cd": 42,
+    "number": 2,
+    "artist": "Deep Nights",
+    "title": "After The Sunset",
+    "remix": "Original Mix",
+    "bpm": 132,
+    "keyNumber": 5,
+    "keyType": "A"
+  },
+  {
+    "cd": 42,
+    "number": 3,
+    "artist": "Estiva & Template One",
+    "title": "November Lovely",
+    "remix": "Estiva Remix",
+    "bpm": 130,
+    "keyNumber": 11,
+    "keyType": "B"
+  },
+  {
+    "cd": 42,
+    "number": 4,
+    "artist": "Gabriel & Dresden feat. Molly",
+    "title": "Tracking Treasure Down",
+    "remix": "Gabriel & Dresden Original Extended Mix",
+    "bpm": 135,
+    "keyNumber": 1,
+    "keyType": "B"
+  },
+  {
+    "cd": 42,
+    "number": 5,
+    "artist": "Marcus Schowssow & Robert Buria",
+    "title": "Kofola",
+    "remix": "Original Mix",
+    "bpm": 130,
+    "keyNumber": 8,
+    "keyType": "A"
+  },
+  {
+    "cd": 42,
+    "number": 6,
+    "artist": "Ron Van Den Beuken & Maarten De Jong",
+    "title": "Her Tears",
+    "remix": "Extended Mix",
+    "bpm": 128,
+    "keyNumber": 6,
+    "keyType": "B"
+  },
+  {
+    "cd": 42,
+    "number": 7,
+    "artist": "Sean Cronin",
+    "title": "Nashira",
+    "remix": "Original Mix",
+    "bpm": 140,
+    "keyNumber": 6,
+    "keyType": "A"
+  },
+  {
+    "cd": 42,
+    "number": 8,
+    "artist": "Tritonal Feat Soto",
+    "title": "One More Day",
+    "remix": "Abbott & Chambers Mix",
+    "bpm": 138,
+    "keyNumber": 5,
+    "keyType": "B"
+  },
+  {
+    "cd": 42,
+    "number": 9,
+    "artist": "Van Der Vleuten",
+    "title": "Meltdown",
+    "remix": "Original Mix",
+    "bpm": 138,
+    "keyNumber": 1,
+    "keyType": "A"
+  },
+  {
+    "cd": 43,
+    "number": 1,
+    "artist": "Darren Tate",
+    "title": "Vespers",
+    "remix": "",
+    "bpm": 136,
+    "keyNumber": 8,
+    "keyType": "A"
+  },
+  {
+    "cd": 43,
+    "number": 2,
+    "artist": "Estiva",
+    "title": "Les Fleurs",
+    "remix": "",
+    "bpm": 130,
+    "keyNumber": 5,
+    "keyType": "A"
+  },
+  {
+    "cd": 43,
+    "number": 3,
+    "artist": "Joe Faber",
+    "title": "Butterfly Effect",
+    "remix": "Original Mix",
+    "bpm": 138,
+    "keyNumber": 9,
+    "keyType": "B"
+  },
+  {
+    "cd": 43,
+    "number": 4,
+    "artist": "John Dopping",
+    "title": "The Mind",
+    "remix": "Dazzle remix",
+    "bpm": 135,
+    "keyNumber": 9,
+    "keyType": "A"
+  },
+  {
+    "cd": 43,
+    "number": 5,
+    "artist": "Light Effect",
+    "title": "Valley Of Quicksand",
+    "remix": "Original Mix",
+    "bpm": 130,
+    "keyNumber": 11,
+    "keyType": "B"
+  },
+  {
+    "cd": 43,
+    "number": 6,
+    "artist": "Mathiass Moor",
+    "title": "Inner Strain",
+    "remix": "DJ Wad Remix",
+    "bpm": 134,
+    "keyNumber": 8,
+    "keyType": "A"
+  },
+  {
+    "cd": 43,
+    "number": 7,
+    "artist": "Moonbeam & Tyler Michaud Feat Tiff Lacey",
+    "title": "Openhearted",
+    "remix": "Original Mix",
+    "bpm": 126,
+    "keyNumber": 10,
+    "keyType": "A"
+  },
+  {
+    "cd": 43,
+    "number": 8,
+    "artist": "Nery",
+    "title": "Redawn",
+    "remix": "Original Mix",
+    "bpm": 139,
+    "keyNumber": 9,
+    "keyType": "B"
+  },
+  {
+    "cd": 43,
+    "number": 9,
+    "artist": "Solarstone",
+    "title": "The Calling",
+    "remix": "RAM Remix",
+    "bpm": 138,
+    "keyNumber": 8,
+    "keyType": "B"
+  },
+  {
+    "cd": 44,
+    "number": 1,
+    "artist": "Ethereal Vibes",
+    "title": "Dreaming In Silence",
+    "remix": "Original Extended Mix",
+    "bpm": 140,
+    "keyNumber": 8,
+    "keyType": "B"
+  },
+  {
+    "cd": 44,
+    "number": 2,
+    "artist": "Leon 78",
+    "title": "Rainbow Of Life",
+    "remix": "Progressiver Remix",
+    "bpm": 133,
+    "keyNumber": 7,
+    "keyType": "A"
+  },
+  {
+    "cd": 44,
+    "number": 3,
+    "artist": "Peter Martijn Wijnia",
+    "title": "Sacrifices",
+    "remix": "Vast Vision Remix",
+    "bpm": 138,
+    "keyNumber": 11,
+    "keyType": "A"
+  },
+  {
+    "cd": 44,
+    "number": 4,
+    "artist": "Proff",
+    "title": "We Show It",
+    "remix": "Original Mix",
+    "bpm": 128,
+    "keyNumber": 9,
+    "keyType": "A"
+  },
+  {
+    "cd": 44,
+    "number": 5,
+    "artist": "Ronski Speed Feat. Mque",
+    "title": "Are You",
+    "remix": "Sun Decade Mix",
+    "bpm": 134,
+    "keyNumber": 9,
+    "keyType": "A"
+  },
+  {
+    "cd": 44,
+    "number": 6,
+    "artist": "Steve Brian",
+    "title": "La Gomera",
+    "remix": "Cressida Remix",
+    "bpm": 132,
+    "keyNumber": 10,
+    "keyType": "A"
+  },
+  {
+    "cd": 44,
+    "number": 7,
+    "artist": "Yuri Kane",
+    "title": "Right Back",
+    "remix": "Original Mix",
+    "bpm": 130,
+    "keyNumber": 9,
+    "keyType": "A"
+  },
+  {
+    "cd": 44,
+    "number": 8,
+    "artist": "7 Skies",
+    "title": "Caffeine",
+    "remix": "Original Mix",
+    "bpm": 134,
+    "keyNumber": 10,
+    "keyType": "A"
+  },
+  {
+    "cd": 44,
+    "number": 9,
+    "artist": "DNS Project feat. Johanna",
+    "title": "Mindful",
+    "remix": "Progressive Mix",
+    "bpm": 134,
+    "keyNumber": 7,
+    "keyType": "A"
+  },
+  {
+    "cd": 45,
+    "number": 1,
+    "artist": "Alex M.O.R.P.H. Feat. Ana Criado",
+    "title": "Sunset Boulevard",
+    "remix": "Original Mix",
+    "bpm": 135,
+    "keyNumber": 3,
+    "keyType": "A"
+  },
+  {
+    "cd": 45,
+    "number": 2,
+    "artist": "Andy Tau",
+    "title": "Hidden Message",
+    "remix": "Dan Stone Remix",
+    "bpm": 138,
+    "keyNumber": 5,
+    "keyType": "A"
+  },
+  {
+    "cd": 45,
+    "number": 3,
+    "artist": "Bart Claessen",
+    "title": "Elf",
+    "remix": "",
+    "bpm": 134,
+    "keyNumber": 12,
+    "keyType": "B"
+  },
+  {
+    "cd": 45,
+    "number": 4,
+    "artist": "Chantola",
+    "title": "Last Train To Mexico",
+    "remix": "Beach X Remix",
+    "bpm": 130,
+    "keyNumber": 8,
+    "keyType": "A"
+  },
+  {
+    "cd": 45,
+    "number": 5,
+    "artist": "Chris Melton",
+    "title": "Minttu",
+    "remix": "Onova Remix",
+    "bpm": 138,
+    "keyNumber": 12,
+    "keyType": "B"
+  },
+  {
+    "cd": 45,
+    "number": 6,
+    "artist": "Ingsha",
+    "title": "Montego Bay",
+    "remix": "Original Mix",
+    "bpm": 136,
+    "keyNumber": 3,
+    "keyType": "A"
+  },
+  {
+    "cd": 45,
+    "number": 7,
+    "artist": "Luigi Lusini",
+    "title": "Who We Are",
+    "remix": "Original Mix",
+    "bpm": 128,
+    "keyNumber": 10,
+    "keyType": "A"
+  },
+  {
+    "cd": 45,
+    "number": 8,
+    "artist": "Orjan Nilsen",
+    "title": "Who We La Guitarra",
+    "remix": "Original Mix",
+    "bpm": 130,
+    "keyNumber": 7,
+    "keyType": "B"
+  },
+  {
+    "cd": 45,
+    "number": 9,
+    "artist": "Solarstone ft. Essence",
+    "title": "Lunar Rings",
+    "remix": "Extended Album Mix",
+    "bpm": 136,
+    "keyNumber": 8,
+    "keyType": "B"
+  },
+  {
+    "cd": 46,
+    "number": 1,
+    "artist": "Arnej vs 8 Wonders",
+    "title": "Beginning Of The End",
+    "remix": "",
+    "bpm": 132,
+    "keyNumber": 12,
+    "keyType": "A"
+  },
+  {
+    "cd": 46,
+    "number": 2,
+    "artist": "Klauss Goulart",
+    "title": "Misty",
+    "remix": "Original Mix",
+    "bpm": 132,
+    "keyNumber": 12,
+    "keyType": "A"
+  },
+  {
+    "cd": 46,
+    "number": 3,
+    "artist": "Mandala Bros.",
+    "title": "Was It The Sunlight",
+    "remix": "Dub Mix",
+    "bpm": 135,
+    "keyNumber": 12,
+    "keyType": "A"
+  },
+  {
+    "cd": 46,
+    "number": 4,
+    "artist": "Max Graham feat Neev Kennedy",
+    "title": "Sun In The Winter",
+    "remix": "Estiva Remix",
+    "bpm": 130,
+    "keyNumber": 2,
+    "keyType": "B"
+  },
+  {
+    "cd": 46,
+    "number": 5,
+    "artist": "Mindstream",
+    "title": "Legacy",
+    "remix": "Para X Remix",
+    "bpm": 134,
+    "keyNumber": 5,
+    "keyType": "A"
+  },
+  {
+    "cd": 46,
+    "number": 6,
+    "artist": "Radion 6",
+    "title": "Up We Go",
+    "remix": "",
+    "bpm": 130,
+    "keyNumber": 7,
+    "keyType": "B"
+  },
+  {
+    "cd": 46,
+    "number": 7,
+    "artist": "Rene Ablaze",
+    "title": "New Nrg",
+    "remix": "",
+    "bpm": 133,
+    "keyNumber": 2,
+    "keyType": "A"
+  },
+  {
+    "cd": 46,
+    "number": 8,
+    "artist": "Spiral Eye",
+    "title": "Arctica",
+    "remix": "Original Mix",
+    "bpm": 138,
+    "keyNumber": 6,
+    "keyType": "A"
+  },
+  {
+    "cd": 46,
+    "number": 9,
+    "artist": "Taylor & Close",
+    "title": "Rio 7",
+    "remix": "Original Mix",
+    "bpm": 132,
+    "keyNumber": 4,
+    "keyType": "A"
+  },
+  {
+    "cd": 47,
+    "number": 1,
+    "artist": "Aerotek",
+    "title": "Aquadynamic",
+    "remix": "Original Mix",
+    "bpm": 130,
+    "keyNumber": 7,
+    "keyType": "B"
+  },
+  {
+    "cd": 47,
+    "number": 2,
+    "artist": "Green",
+    "title": "Touching The Clouds",
+    "remix": "Original Mix",
+    "bpm": 136,
+    "keyNumber": 10,
+    "keyType": "A"
+  },
+  {
+    "cd": 47,
+    "number": 3,
+    "artist": "James Horner feat. Leona Lewis",
+    "title": "I See You",
+    "remix": "Cosmic Gate Remix",
+    "bpm": 132,
+    "keyNumber": 3,
+    "keyType": "A"
+  },
+  {
+    "cd": 47,
+    "number": 4,
+    "artist": "Leon Bolier & Marcus Schossow",
+    "title": "2099",
+    "remix": "Original Mix",
+    "bpm": 130,
+    "keyNumber": 10,
+    "keyType": "A"
+  },
+  {
+    "cd": 47,
+    "number": 5,
+    "artist": "Mark Sherry Vs Dr Willis",
+    "title": "Seismic",
+    "remix": "Original Mix",
+    "bpm": 134,
+    "keyNumber": 1,
+    "keyType": "A"
+  },
+  {
+    "cd": 47,
+    "number": 6,
+    "artist": "Matt Cerf Vs Eric Meza Feat Jaren",
+    "title": "With Me",
+    "remix": "Passive Progressive Remix",
+    "bpm": 126,
+    "keyNumber": 3,
+    "keyType": "A"
+  },
+  {
+    "cd": 47,
+    "number": 7,
+    "artist": "Melodia",
+    "title": "The Way",
+    "remix": "",
+    "bpm": 128,
+    "keyNumber": 1,
+    "keyType": "B"
+  },
+  {
+    "cd": 47,
+    "number": 8,
+    "artist": "Rex Mundi",
+    "title": "Kalua Islands",
+    "remix": "Original Mix",
+    "bpm": 132,
+    "keyNumber": 4,
+    "keyType": "A"
+  },
+  {
+    "cd": 47,
+    "number": 9,
+    "artist": "Velvetine",
+    "title": "Safe (Wherever You Are)",
+    "remix": "Ian Flux & Thomas Blofeld Vocal Mix",
+    "bpm": 132,
+    "keyNumber": 12,
+    "keyType": "B"
+  },
+  {
+    "cd": 48,
+    "number": 1,
+    "artist": "Adam Nickey Pres. Blue 8",
+    "title": "Eleventh Street",
+    "remix": "Original Mix",
+    "bpm": 137,
+    "keyNumber": 10,
+    "keyType": "B"
+  },
+  {
+    "cd": 48,
+    "number": 2,
+    "artist": "Dynamic Emotion",
+    "title": "Welcome To My Head",
+    "remix": "Progressiver Remix",
+    "bpm": 132,
+    "keyNumber": 10,
+    "keyType": "A"
+  },
+  {
+    "cd": 48,
+    "number": 3,
+    "artist": "Guy Mearns",
+    "title": "Stargazer",
+    "remix": "",
+    "bpm": 138,
+    "keyNumber": 10,
+    "keyType": "A"
+  },
+  {
+    "cd": 48,
+    "number": 4,
+    "artist": "Karanda",
+    "title": "Shuffle",
+    "remix": "Original Mix",
+    "bpm": 130,
+    "keyNumber": 8,
+    "keyType": "A"
+  },
+  {
+    "cd": 48,
+    "number": 5,
+    "artist": "Michael Angelo & Solo feat Denise Rivera",
+    "title": "Alone",
+    "remix": "Arty Remix",
+    "bpm": 128,
+    "keyNumber": 2,
+    "keyType": "A"
+  },
+  {
+    "cd": 48,
+    "number": 6,
+    "artist": "Moonpax vs Snatt & Vix",
+    "title": "Winter Of Love",
+    "remix": "Eco Remix",
+    "bpm": 138,
+    "keyNumber": 8,
+    "keyType": "A"
+  },
+  {
+    "cd": 48,
+    "number": 7,
+    "artist": "Pete Silver",
+    "title": "She Is The Morning Sun",
+    "remix": "Original Mix",
+    "bpm": 140,
+    "keyNumber": 8,
+    "keyType": "B"
+  },
+  {
+    "cd": 48,
+    "number": 8,
+    "artist": "Ryeland & Kelly Jay",
+    "title": "Spirits Connect",
+    "remix": "Original Mix",
+    "bpm": 134,
+    "keyNumber": 6,
+    "keyType": "A"
+  },
+  {
+    "cd": 48,
+    "number": 9,
+    "artist": "SoundLift",
+    "title": "Nakthi",
+    "remix": "Ferry Tayle And Stephan R Present Mirage Remix",
+    "bpm": 140,
+    "keyNumber": 3,
+    "keyType": "B"
+  },
+  {
+    "cd": 49,
+    "number": 1,
+    "artist": "Andy Tau",
+    "title": "Static",
+    "remix": "Sasha Virus Remix",
+    "bpm": 131,
+    "keyNumber": 4,
+    "keyType": "A"
+  },
+  {
+    "cd": 49,
+    "number": 2,
+    "artist": "Ivan Vorontsov",
+    "title": "The City At Night",
+    "remix": "",
+    "bpm": 132,
+    "keyNumber": 8,
+    "keyType": "A"
+  },
+  {
+    "cd": 49,
+    "number": 3,
+    "artist": "Mark Dior",
+    "title": "Memories Of Tomorrow",
+    "remix": "Oceania’s Reminiscence Mix",
+    "bpm": 140,
+    "keyNumber": 6,
+    "keyType": "B"
+  },
+  {
+    "cd": 49,
+    "number": 4,
+    "artist": "Med and Phil Metcalfe",
+    "title": "January",
+    "remix": "Alphadeleta’s Balearic Breeze Mix",
+    "bpm": 134,
+    "keyNumber": 3,
+    "keyType": "B"
+  },
+  {
+    "cd": 49,
+    "number": 5,
+    "artist": "Mikko L",
+    "title": "Summer Memories",
+    "remix": "Original Mix",
+    "bpm": 138,
+    "keyNumber": 5,
+    "keyType": "A"
+  },
+  {
+    "cd": 49,
+    "number": 6,
+    "artist": "Neon Lights",
+    "title": "Ayatar",
+    "remix": "Original Mix",
+    "bpm": 135,
+    "keyNumber": 6,
+    "keyType": "A"
+  },
+  {
+    "cd": 49,
+    "number": 7,
+    "artist": "Styller",
+    "title": "What Happened Once",
+    "remix": "Original Mix",
+    "bpm": 128,
+    "keyNumber": 2,
+    "keyType": "B"
+  },
+  {
+    "cd": 49,
+    "number": 8,
+    "artist": "Van Dresen And Thrice",
+    "title": "Subnative",
+    "remix": "Original Mix",
+    "bpm": 136,
+    "keyNumber": 9,
+    "keyType": "A"
+  },
+  {
+    "cd": 49,
+    "number": 9,
+    "artist": "Will B",
+    "title": "Twenty Three",
+    "remix": "Jpl Remix",
+    "bpm": 128,
+    "keyNumber": 12,
+    "keyType": "B"
+  },
+  {
+    "cd": 50,
+    "number": 1,
+    "artist": "Anemosphere",
+    "title": "Kyra",
+    "remix": "Redstar Remix",
+    "bpm": 140,
+    "keyNumber": 2,
+    "keyType": "A"
+  },
+  {
+    "cd": 50,
+    "number": 2,
+    "artist": "David Forbes & Greame Pollock",
+    "title": "Traumatise",
+    "remix": "David Forbes Refit",
+    "bpm": 140,
+    "keyNumber": 11,
+    "keyType": "A"
+  },
+  {
+    "cd": 50,
+    "number": 3,
+    "artist": "Joel Gershom",
+    "title": "Purple Sunset",
+    "remix": "Castra & Sovve Remix",
+    "bpm": 128,
+    "keyNumber": 8,
+    "keyType": "B"
+  },
+  {
+    "cd": 50,
+    "number": 4,
+    "artist": "Jonas Stenberg",
+    "title": "Trademark",
+    "remix": "Original Mix",
+    "bpm": 132,
+    "keyNumber": 11,
+    "keyType": "A"
+  },
+  {
+    "cd": 50,
+    "number": 5,
+    "artist": "Kyau & Albert",
+    "title": "Once In A Life",
+    "remix": "Club Mix",
+    "bpm": 132,
+    "keyNumber": 1,
+    "keyType": "B"
+  },
+  {
+    "cd": 50,
+    "number": 6,
+    "artist": "L.A.V.I feat Penny Robillard",
+    "title": "“Watching You, Watching Me”",
+    "remix": "Sunquest Remix",
+    "bpm": 136,
+    "keyNumber": 9,
+    "keyType": "A"
+  },
+  {
+    "cd": 50,
+    "number": 7,
+    "artist": "Pulser",
+    "title": "Broken Universe",
+    "remix": "Original Mix",
+    "bpm": 135,
+    "keyNumber": 7,
+    "keyType": "A"
+  },
+  {
+    "cd": 50,
+    "number": 8,
+    "artist": "Static Blue & Oliver P",
+    "title": "Chrimson Skies",
+    "remix": "Akesson Remix",
+    "bpm": 138,
+    "keyNumber": 11,
+    "keyType": "B"
+  },
+  {
+    "cd": 50,
+    "number": 9,
+    "artist": "Zaa",
+    "title": "5 Minutes Of Love",
+    "remix": "Silver J & Catania Remix",
+    "bpm": 132,
+    "keyNumber": 10,
+    "keyType": "B"
+  },
+  {
+    "cd": 51,
+    "number": 1,
+    "artist": "4 Strings",
+    "title": "Daytime",
+    "remix": "Sean Tyas Remix",
+    "bpm": 140,
+    "keyNumber": 5,
+    "keyType": "B"
+  },
+  {
+    "cd": 51,
+    "number": 2,
+    "artist": "Bissen",
+    "title": "Mohegan Bluffs",
+    "remix": "Club Mix",
+    "bpm": 140,
+    "keyNumber": 1,
+    "keyType": "B"
+  },
+  {
+    "cd": 51,
+    "number": 3,
+    "artist": "Edu",
+    "title": "Our Home",
+    "remix": "Original Mix",
+    "bpm": 132,
+    "keyNumber": 8,
+    "keyType": "A"
+  },
+  {
+    "cd": 51,
+    "number": 4,
+    "artist": "Fred Baker Pres Saona",
+    "title": "Saona",
+    "remix": "",
+    "bpm": 130,
+    "keyNumber": 6,
+    "keyType": "B"
+  },
+  {
+    "cd": 51,
+    "number": 5,
+    "artist": "Jer Martin",
+    "title": "Ten Minutes To Midnight",
+    "remix": "Original Club Mix",
+    "bpm": 137,
+    "keyNumber": 9,
+    "keyType": "A"
+  },
+  {
+    "cd": 51,
+    "number": 6,
+    "artist": "Nic Chagall",
+    "title": "Morning Light",
+    "remix": "Extended Album Mix",
+    "bpm": 130,
+    "keyNumber": 6,
+    "keyType": "A"
+  },
+  {
+    "cd": 51,
+    "number": 7,
+    "artist": "Nitrous Oxide feat. Aneym",
+    "title": "Far Away",
+    "remix": "Club Mix",
+    "bpm": 136,
+    "keyNumber": 11,
+    "keyType": "B"
+  },
+  {
+    "cd": 51,
+    "number": 8,
+    "artist": "Simon Pitt",
+    "title": "Carpe Diem",
+    "remix": "Nuera And Setrise Remix",
+    "bpm": 130,
+    "keyNumber": 7,
+    "keyType": "B"
+  },
+  {
+    "cd": 51,
+    "number": 9,
+    "artist": "Super8 And Tab feat. Alyna",
+    "title": "Delusion",
+    "remix": "Original Mix",
+    "bpm": 138,
+    "keyNumber": 2,
+    "keyType": "B"
+  },
+  {
+    "cd": 52,
+    "number": 1,
+    "artist": "Afternova",
+    "title": "Serenity",
+    "remix": "Andy Blueman Remix",
+    "bpm": 138,
+    "keyNumber": 11,
+    "keyType": "A"
+  },
+  {
+    "cd": 52,
+    "number": 2,
+    "artist": "Allende",
+    "title": "Tricky Waters",
+    "remix": "Retrospective Mix",
+    "bpm": 132,
+    "keyNumber": 3,
+    "keyType": "A"
+  },
+  {
+    "cd": 52,
+    "number": 3,
+    "artist": "Ben Presoton feat Susie",
+    "title": "Remember Me",
+    "remix": "Daniel Kandi’s Flashy Tribute Mix",
+    "bpm": 138,
+    "keyNumber": 4,
+    "keyType": "A"
+  },
+  {
+    "cd": 52,
+    "number": 4,
+    "artist": "Cosmic Gate",
+    "title": "Barra",
+    "remix": "Extended Mix",
+    "bpm": 132,
+    "keyNumber": 2,
+    "keyType": "B"
+  },
+  {
+    "cd": 52,
+    "number": 5,
+    "artist": "Einar K",
+    "title": "Schiphol",
+    "remix": "Original Mix",
+    "bpm": 137,
+    "keyNumber": 5,
+    "keyType": "A"
+  },
+  {
+    "cd": 52,
+    "number": 6,
+    "artist": "Espen Lorentzen",
+    "title": "Lateral",
+    "remix": "",
+    "bpm": 136,
+    "keyNumber": 12,
+    "keyType": "A"
+  },
+  {
+    "cd": 52,
+    "number": 7,
+    "artist": "Ronnie Play",
+    "title": "Intensify",
+    "remix": "Fabio XB Rework",
+    "bpm": 132,
+    "keyNumber": 9,
+    "keyType": "A"
+  },
+  {
+    "cd": 52,
+    "number": 8,
+    "artist": "The Blizzard & Omnia",
+    "title": "Metanoia",
+    "remix": "Original Club Mix",
+    "bpm": 134,
+    "keyNumber": 6,
+    "keyType": "A"
+  },
+  {
+    "cd": 52,
+    "number": 9,
+    "artist": "Tim Preijers Pres Sense of Shiver Feat Boom",
+    "title": "Offshore",
+    "remix": "Temple One’s Ocean View Remix",
+    "bpm": 140,
+    "keyNumber": 5,
+    "keyType": "B"
+  },
+  {
+    "cd": 53,
+    "number": 1,
+    "artist": "Andy Moor feat. Carrie Skipper",
+    "title": "She Moves",
+    "remix": "Original Mix",
+    "bpm": 135,
+    "keyNumber": 10,
+    "keyType": "A"
+  },
+  {
+    "cd": 53,
+    "number": 2,
+    "artist": "Christopher Smith",
+    "title": "Winter Nights",
+    "remix": "",
+    "bpm": 128,
+    "keyNumber": 10,
+    "keyType": "B"
+  },
+  {
+    "cd": 53,
+    "number": 3,
+    "artist": "Ferry Tayle & Static Blue",
+    "title": "Trapeze",
+    "remix": "Arty Remix",
+    "bpm": 130,
+    "keyNumber": 11,
+    "keyType": "B"
+  },
+  {
+    "cd": 53,
+    "number": 4,
+    "artist": "Johnny Yono",
+    "title": "Mechanics Of The Mind",
+    "remix": "Original Mix",
+    "bpm": 130,
+    "keyNumber": 12,
+    "keyType": "A"
+  },
+  {
+    "cd": 53,
+    "number": 5,
+    "artist": "Mat Zo",
+    "title": "The Found",
+    "remix": "",
+    "bpm": 136,
+    "keyNumber": 3,
+    "keyType": "A"
+  },
+  {
+    "cd": 53,
+    "number": 6,
+    "artist": "Mat Zo",
+    "title": "The Lost",
+    "remix": "",
+    "bpm": 132,
+    "keyNumber": 9,
+    "keyType": "A"
+  },
+  {
+    "cd": 53,
+    "number": 7,
+    "artist": "Mike Oceanic",
+    "title": "Wide Horizion",
+    "remix": "Karybde & Scylla Remix",
+    "bpm": 132,
+    "keyNumber": 3,
+    "keyType": "A"
+  },
+  {
+    "cd": 53,
+    "number": 8,
+    "artist": "Raven & Kleekamp",
+    "title": "Memorable Quotes",
+    "remix": "Original Mix",
+    "bpm": 139,
+    "keyNumber": 4,
+    "keyType": "A"
+  },
+  {
+    "cd": 53,
+    "number": 9,
+    "artist": "Ville Lope",
+    "title": "Farewell To Forgiven",
+    "remix": "Ayleon Remix",
+    "bpm": 132,
+    "keyNumber": 12,
+    "keyType": "B"
+  },
+  {
+    "cd": 54,
+    "number": 1,
+    "artist": "Jan Oostdyk & Robert Smit",
+    "title": "Espana El Color",
+    "remix": "",
+    "bpm": 134,
+    "keyNumber": 8,
+    "keyType": "A"
+  },
+  {
+    "cd": 54,
+    "number": 2,
+    "artist": "Lee Osborne",
+    "title": "Eight",
+    "remix": "Progressive Mix",
+    "bpm": 128,
+    "keyNumber": 10,
+    "keyType": "A"
+  },
+  {
+    "cd": 54,
+    "number": 3,
+    "artist": "Nadia Ali",
+    "title": "Fantasy",
+    "remix": "Tritonal Air Up There Remix",
+    "bpm": 135,
+    "keyNumber": 1,
+    "keyType": "A"
+  },
+  {
+    "cd": 54,
+    "number": 4,
+    "artist": "Robert Gitelman & Eddie Sender",
+    "title": "Venus",
+    "remix": "",
+    "bpm": 132,
+    "keyNumber": 5,
+    "keyType": "A"
+  },
+  {
+    "cd": 54,
+    "number": 5,
+    "artist": "Roger Shah & Ralph Fritsch pres Black Pearl",
+    "title": "Rise",
+    "remix": "Kim Svärd Remix",
+    "bpm": 130,
+    "keyNumber": 8,
+    "keyType": "B"
+  },
+  {
+    "cd": 54,
+    "number": 6,
+    "artist": "Sceleton feat Aneym",
+    "title": "Rain Down",
+    "remix": "Solar Energy Remix",
+    "bpm": 133,
+    "keyNumber": 1,
+    "keyType": "B"
+  },
+  {
+    "cd": 54,
+    "number": 7,
+    "artist": "Six Senes pres Factor Six",
+    "title": "Microtonic",
+    "remix": "Danilo Ercole Remix",
+    "bpm": 134,
+    "keyNumber": 8,
+    "keyType": "A"
+  },
+  {
+    "cd": 54,
+    "number": 8,
+    "artist": "TyDi & Dennis Sheperd feat. Marcie",
+    "title": "Somehow",
+    "remix": "Sebastian Brandt Remix",
+    "bpm": 130,
+    "keyNumber": 5,
+    "keyType": "B"
+  },
+  {
+    "cd": 54,
+    "number": 9,
+    "artist": "Vast Vision & Misja Helsloot",
+    "title": "In Your Face",
+    "remix": "",
+    "bpm": 138,
+    "keyNumber": 5,
+    "keyType": "A"
+  },
+  {
+    "cd": 55,
+    "number": 1,
+    "artist": "Airsun",
+    "title": "Butterfly",
+    "remix": "Icone remix",
+    "bpm": 137,
+    "keyNumber": 6,
+    "keyType": "A"
+  },
+  {
+    "cd": 55,
+    "number": 2,
+    "artist": "Blue Tente feat Stine Grove",
+    "title": "Emptiness",
+    "remix": "",
+    "bpm": 138,
+    "keyNumber": 3,
+    "keyType": "B"
+  },
+  {
+    "cd": 55,
+    "number": 3,
+    "artist": "Daniel Kandi",
+    "title": "Everything Counts",
+    "remix": "Suncatcher Remix",
+    "bpm": 138,
+    "keyNumber": 5,
+    "keyType": "B"
+  },
+  {
+    "cd": 55,
+    "number": 4,
+    "artist": "David Forbes & Alan Nimmo",
+    "title": "Samui",
+    "remix": "",
+    "bpm": 133,
+    "keyNumber": 4,
+    "keyType": "A"
+  },
+  {
+    "cd": 55,
+    "number": 5,
+    "artist": "DJ Eco",
+    "title": "People",
+    "remix": "Rafel Frost Remix",
+    "bpm": 135,
+    "keyNumber": 3,
+    "keyType": "B"
+  },
+  {
+    "cd": 55,
+    "number": 6,
+    "artist": "Sky Motion",
+    "title": "Autumn Dreams",
+    "remix": "Vast Vision Remix",
+    "bpm": 136,
+    "keyNumber": 1,
+    "keyType": "B"
+  },
+  {
+    "cd": 55,
+    "number": 7,
+    "artist": "Soundlift",
+    "title": "Broken Heart",
+    "remix": "Daniel Loubscher Remix",
+    "bpm": 138,
+    "keyNumber": 9,
+    "keyType": "A"
+  },
+  {
+    "cd": 55,
+    "number": 8,
+    "artist": "Super8 & Tab feat. Anton Sonin",
+    "title": "Black Is The New Yellow",
+    "remix": "Activate Remix",
+    "bpm": 136,
+    "keyNumber": 7,
+    "keyType": "B"
+  },
+  {
+    "cd": 55,
+    "number": 9,
+    "artist": "Susana feat Omnia & The Blizzard",
+    "title": "Closer",
+    "remix": "Beat Service Remix",
+    "bpm": 131,
+    "keyNumber": 9,
+    "keyType": "A"
+  },
+  {
+    "cd": 56,
+    "number": 1,
+    "artist": "16 Bit Lolitas",
+    "title": "Singularity",
+    "remix": "",
+    "bpm": 136,
+    "keyNumber": 11,
+    "keyType": "A"
+  },
+  {
+    "cd": 56,
+    "number": 2,
+    "artist": "Accendo",
+    "title": "Arcturus",
+    "remix": "Original Mix",
+    "bpm": 138,
+    "keyNumber": 10,
+    "keyType": "B"
+  },
+  {
+    "cd": 56,
+    "number": 3,
+    "artist": "Arctic Moon",
+    "title": "True Romance",
+    "remix": "Brave Remix",
+    "bpm": 130,
+    "keyNumber": 8,
+    "keyType": "B"
+  },
+  {
+    "cd": 56,
+    "number": 4,
+    "artist": "Basil O’Glue",
+    "title": "Invidia",
+    "remix": "Grube & Hovsepian Remix",
+    "bpm": 132,
+    "keyNumber": 1,
+    "keyType": "A"
+  },
+  {
+    "cd": 56,
+    "number": 5,
+    "artist": "Beat Service feat Manon Polare",
+    "title": "Static",
+    "remix": "",
+    "bpm": 132,
+    "keyNumber": 8,
+    "keyType": "A"
+  },
+  {
+    "cd": 56,
+    "number": 6,
+    "artist": "Karanda",
+    "title": "Karanda",
+    "remix": "Baz Lalor Remix",
+    "bpm": 132,
+    "keyNumber": 10,
+    "keyType": "B"
+  },
+  {
+    "cd": 56,
+    "number": 7,
+    "artist": "Ron van den Bueken & Magic Power feat Tom K",
+    "title": "Eagly Fly",
+    "remix": "Dub Mix",
+    "bpm": 140,
+    "keyNumber": 6,
+    "keyType": "A"
+  },
+  {
+    "cd": 56,
+    "number": 8,
+    "artist": "System F",
+    "title": "Elevate",
+    "remix": "Dan Brazier Remix",
+    "bpm": 128,
+    "keyNumber": 11,
+    "keyType": "B"
+  },
+  {
+    "cd": 56,
+    "number": 9,
+    "artist": "Wellenrausch",
+    "title": "No Superstition",
+    "remix": "Simmons & Blanc Remix",
+    "bpm": 134,
+    "keyNumber": 1,
+    "keyType": "A"
+  },
+  {
+    "cd": 57,
+    "number": 1,
+    "artist": "Ali Wilson",
+    "title": "Pandora",
+    "remix": "Original Mix",
+    "bpm": 132,
+    "keyNumber": 4,
+    "keyType": "A"
+  },
+  {
+    "cd": 57,
+    "number": 2,
+    "artist": "Dinka",
+    "title": "Some People Will Never Learn",
+    "remix": "Original mix",
+    "bpm": 128,
+    "keyNumber": 6,
+    "keyType": "B"
+  },
+  {
+    "cd": 57,
+    "number": 3,
+    "artist": "Jaytech & James Grant",
+    "title": "Moth",
+    "remix": "",
+    "bpm": 125,
+    "keyNumber": 6,
+    "keyType": "B"
+  },
+  {
+    "cd": 57,
+    "number": 4,
+    "artist": "Martin Van Korsen",
+    "title": "I Know",
+    "remix": "Funabashi Remix",
+    "bpm": 128,
+    "keyNumber": 4,
+    "keyType": "A"
+  },
+  {
+    "cd": 57,
+    "number": 5,
+    "artist": "Roddy Reynaert",
+    "title": "Warp",
+    "remix": "Original Mix",
+    "bpm": 128,
+    "keyNumber": 1,
+    "keyType": "A"
+  },
+  {
+    "cd": 57,
+    "number": 6,
+    "artist": "Ronski Speed",
+    "title": "Denva",
+    "remix": "Paul Vernon Remix",
+    "bpm": 134,
+    "keyNumber": 9,
+    "keyType": "A"
+  },
+  {
+    "cd": 57,
+    "number": 7,
+    "artist": "Sebastian Brandt",
+    "title": "450",
+    "remix": "",
+    "bpm": 138,
+    "keyNumber": 11,
+    "keyType": "A"
+  },
+  {
+    "cd": 57,
+    "number": 8,
+    "artist": "Sunny Lax",
+    "title": "Misgrey",
+    "remix": "Original Mix",
+    "bpm": 134,
+    "keyNumber": 1,
+    "keyType": "A"
+  },
+  {
+    "cd": 57,
+    "number": 9,
+    "artist": "The Thrillseekers",
+    "title": "Savanna",
+    "remix": "",
+    "bpm": 135,
+    "keyNumber": 2,
+    "keyType": "A"
+  },
+  {
+    "cd": 58,
+    "number": 1,
+    "artist": "Armin Zamani",
+    "title": "Childhood Memories",
+    "remix": "Progressive Mix",
+    "bpm": 130,
+    "keyNumber": 5,
+    "keyType": "B"
+  },
+  {
+    "cd": 58,
+    "number": 2,
+    "artist": "Audien",
+    "title": "November",
+    "remix": "Original Mix",
+    "bpm": 128,
+    "keyNumber": 8,
+    "keyType": "B"
+  },
+  {
+    "cd": 58,
+    "number": 3,
+    "artist": "Bushi",
+    "title": "23 Kisses",
+    "remix": "Original Mix",
+    "bpm": 137,
+    "keyNumber": 4,
+    "keyType": "A"
+  },
+  {
+    "cd": 58,
+    "number": 4,
+    "artist": "D.E.R. & Julius Beat",
+    "title": "Our Feeling",
+    "remix": "Khomha Remix",
+    "bpm": 128,
+    "keyNumber": 6,
+    "keyType": "A"
+  },
+  {
+    "cd": 58,
+    "number": 5,
+    "artist": "Dash Berlin Feat Solid Sessions",
+    "title": "Janeiro",
+    "remix": "Dash Berlin 4 AM Mix",
+    "bpm": 135,
+    "keyNumber": 2,
+    "keyType": "A"
+  },
+  {
+    "cd": 58,
+    "number": 6,
+    "artist": "D-Mad",
+    "title": "She Gave Happiness",
+    "remix": "Arty Remix",
+    "bpm": 132,
+    "keyNumber": 11,
+    "keyType": "B"
+  },
+  {
+    "cd": 58,
+    "number": 7,
+    "artist": "Jaytech",
+    "title": "Ozone",
+    "remix": "Original Mix",
+    "bpm": 127,
+    "keyNumber": 9,
+    "keyType": "A"
+  },
+  {
+    "cd": 58,
+    "number": 8,
+    "artist": "Lisko",
+    "title": "Dead Voice",
+    "remix": "",
+    "bpm": 136,
+    "keyNumber": 6,
+    "keyType": "A"
+  },
+  {
+    "cd": 58,
+    "number": 9,
+    "artist": "Maor Levi",
+    "title": "Illumina",
+    "remix": "",
+    "bpm": 128,
+    "keyNumber": 3,
+    "keyType": "A"
+  },
+  {
+    "cd": 59,
+    "number": 1,
+    "artist": "Aurora Feat. Naimee Coleman",
+    "title": "Ordinary World",
+    "remix": "Above & Beyond Remix",
+    "bpm": 138.5,
+    "keyNumber": 12,
+    "keyType": "A"
+  },
+  {
+    "cd": 59,
+    "number": 2,
+    "artist": "Hoyaa",
+    "title": "Rising Star",
+    "remix": "Original Mix",
+    "bpm": 136,
+    "keyNumber": 3,
+    "keyType": "B"
+  },
+  {
+    "cd": 59,
+    "number": 3,
+    "artist": "Martin Sas",
+    "title": "The Way To Happiness",
+    "remix": "Club Mix",
+    "bpm": 136,
+    "keyNumber": 3,
+    "keyType": "A"
+  },
+  {
+    "cd": 59,
+    "number": 4,
+    "artist": "Phynn",
+    "title": "Lucid",
+    "remix": "Original Mix",
+    "bpm": 137,
+    "keyNumber": 7,
+    "keyType": "A"
+  },
+  {
+    "cd": 59,
+    "number": 5,
+    "artist": "Shogun",
+    "title": "City Of Angels",
+    "remix": "",
+    "bpm": 140,
+    "keyNumber": 2,
+    "keyType": "B"
+  },
+  {
+    "cd": 59,
+    "number": 6,
+    "artist": "Solar Stone",
+    "title": "Seven Cities",
+    "remix": "Solar Stone’s Atlantis Mix",
+    "bpm": 135,
+    "keyNumber": 8,
+    "keyType": "B"
+  },
+  {
+    "cd": 59,
+    "number": 7,
+    "artist": "Sunlounger Feat Zara Taylor",
+    "title": "Found",
+    "remix": "Pedro Del Mar Remix",
+    "bpm": 136,
+    "keyNumber": 3,
+    "keyType": "A"
+  },
+  {
+    "cd": 59,
+    "number": 8,
+    "artist": "Thomas Bronzwaer",
+    "title": "Collider",
+    "remix": "Jorn Van Deynhoven Remix",
+    "bpm": 137,
+    "keyNumber": 2,
+    "keyType": "A"
+  },
+  {
+    "cd": 59,
+    "number": 9,
+    "artist": "Tim Berg",
+    "title": "Bromance",
+    "remix": "Avicii’s Arena Mix",
+    "bpm": 126,
+    "keyNumber": 12,
+    "keyType": "A"
+  },
+  {
+    "cd": 60,
+    "number": 1,
+    "artist": "Afternova",
+    "title": "Sunset In Dubai",
+    "remix": "Magnus Mykleby Remix",
+    "bpm": 128,
+    "keyNumber": 7,
+    "keyType": "A"
+  },
+  {
+    "cd": 60,
+    "number": 2,
+    "artist": "DJ Eco feat. Lira Yin",
+    "title": "Love",
+    "remix": "Dub Mix",
+    "bpm": 132.5,
+    "keyNumber": 12,
+    "keyType": "B"
+  },
+  {
+    "cd": 60,
+    "number": 3,
+    "artist": "Kinash",
+    "title": "Woodblock",
+    "remix": "",
+    "bpm": 130,
+    "keyNumber": 7,
+    "keyType": "B"
+  },
+  {
+    "cd": 60,
+    "number": 4,
+    "artist": "Matt Everson",
+    "title": "Down Under",
+    "remix": "John Gibbons & Scimon Tist Remix",
+    "bpm": 132,
+    "keyNumber": 5,
+    "keyType": "A"
+  },
+  {
+    "cd": 60,
+    "number": 5,
+    "artist": "Nitrous Oxide",
+    "title": "Dreamcatcher",
+    "remix": "Stoneface & Terminal Remix",
+    "bpm": 132,
+    "keyNumber": 10,
+    "keyType": "B"
+  },
+  {
+    "cd": 60,
+    "number": 6,
+    "artist": "Pedro Del Mar & Blue Tente",
+    "title": "You Left",
+    "remix": "Pedro Del Mar’s Epic Mix",
+    "bpm": 136,
+    "keyNumber": 11,
+    "keyType": "B"
+  },
+  {
+    "cd": 60,
+    "number": 7,
+    "artist": "Reverse",
+    "title": "Absolute Reality",
+    "remix": "Arty Remix",
+    "bpm": 130,
+    "keyNumber": 6,
+    "keyType": "B"
+  },
+  {
+    "cd": 60,
+    "number": 8,
+    "artist": "Rex Mundi",
+    "title": "Opera Of Northern Ocean",
+    "remix": "Phynn Remix",
+    "bpm": 138,
+    "keyNumber": 3,
+    "keyType": "A"
+  },
+  {
+    "cd": 60,
+    "number": 9,
+    "artist": "Temple One feat. Hannah Ray",
+    "title": "Autumn Leaves",
+    "remix": "Estiva Remix",
+    "bpm": 130,
+    "keyNumber": 3,
+    "keyType": "A"
+  },
+  {
+    "cd": 61,
+    "number": 1,
+    "artist": "Alex Stealthy",
+    "title": "Our Universe",
+    "remix": "",
+    "bpm": 124,
+    "keyNumber": 6,
+    "keyType": "A"
+  },
+  {
+    "cd": 61,
+    "number": 2,
+    "artist": "Dimension",
+    "title": "Queensland",
+    "remix": "Artic Moon Remix",
+    "bpm": 140,
+    "keyNumber": 11,
+    "keyType": "B"
+  },
+  {
+    "cd": 61,
+    "number": 3,
+    "artist": "DNS Project pres. Whiteglow",
+    "title": "Uncross These Lines feat. Lo-Fi Sugar",
+    "remix": "Vocal Mix",
+    "bpm": 138,
+    "keyNumber": 12,
+    "keyType": "B"
+  },
+  {
+    "cd": 61,
+    "number": 4,
+    "artist": "Lange Feat Emma Hewitt",
+    "title": "Live Forever",
+    "remix": "Mat Zo Remix",
+    "bpm": 132,
+    "keyNumber": 3,
+    "keyType": "A"
+  },
+  {
+    "cd": 61,
+    "number": 5,
+    "artist": "Masoud feat. Laurie",
+    "title": "Blinded",
+    "remix": "Original Mix",
+    "bpm": 132,
+    "keyNumber": 4,
+    "keyType": "A"
+  },
+  {
+    "cd": 61,
+    "number": 6,
+    "artist": "Samuel Jason",
+    "title": "Morning Sun",
+    "remix": "Original Mix",
+    "bpm": 128,
+    "keyNumber": 8,
+    "keyType": "A"
+  },
+  {
+    "cd": 61,
+    "number": 7,
+    "artist": "Sly One Vs Jurrane",
+    "title": "Everything To Me",
+    "remix": "Original Mix",
+    "bpm": 140,
+    "keyNumber": 11,
+    "keyType": "B"
+  },
+  {
+    "cd": 61,
+    "number": 8,
+    "artist": "Trilucid",
+    "title": "Departures",
+    "remix": "Yuri Kane Remix",
+    "bpm": 132,
+    "keyNumber": 10,
+    "keyType": "B"
+  },
+  {
+    "cd": 61,
+    "number": 9,
+    "artist": "Wezz Devall",
+    "title": "Free My Willy",
+    "remix": "",
+    "bpm": 134,
+    "keyNumber": 7,
+    "keyType": "A"
+  },
+  {
+    "cd": 62,
+    "number": 1,
+    "artist": "Arty pres. Alpha 9",
+    "title": "Come Home",
+    "remix": "Original Mix",
+    "bpm": 128,
+    "keyNumber": 9,
+    "keyType": "A"
+  },
+  {
+    "cd": 62,
+    "number": 2,
+    "artist": "Dejan S",
+    "title": "Behind The Mountains",
+    "remix": "",
+    "bpm": 125,
+    "keyNumber": 2,
+    "keyType": "B"
+  },
+  {
+    "cd": 62,
+    "number": 3,
+    "artist": "Ivan Khurtin",
+    "title": "Beauty Of Darkness",
+    "remix": "Johnny Juice remix",
+    "bpm": 130,
+    "keyNumber": 5,
+    "keyType": "A"
+  },
+  {
+    "cd": 62,
+    "number": 4,
+    "artist": "Simmons And Blanc",
+    "title": "Whatever It Takes",
+    "remix": "Orjan Nilsen Remix",
+    "bpm": 128,
+    "keyNumber": 5,
+    "keyType": "A"
+  },
+  {
+    "cd": 62,
+    "number": 5,
+    "artist": "System F",
+    "title": "Solstice",
+    "remix": "Smokers Area & Guerrero Remix",
+    "bpm": 136,
+    "keyNumber": 7,
+    "keyType": "A"
+  },
+  {
+    "cd": 62,
+    "number": 6,
+    "artist": "The Dreamline",
+    "title": "Azure",
+    "remix": "Aleksey Sladkov Remix",
+    "bpm": 128,
+    "keyNumber": 11,
+    "keyType": "B"
+  },
+  {
+    "cd": 62,
+    "number": 7,
+    "artist": "Three Drives",
+    "title": "Greece 2000",
+    "remix": "Sander Van Dien Mix",
+    "bpm": 132,
+    "keyNumber": 1,
+    "keyType": "A"
+  },
+  {
+    "cd": 62,
+    "number": 8,
+    "artist": "Tucandeo",
+    "title": "Layla",
+    "remix": "Original Mix",
+    "bpm": 133,
+    "keyNumber": 2,
+    "keyType": "B"
+  },
+  {
+    "cd": 62,
+    "number": 9,
+    "artist": "Walsh & Mcauley feat. Antonia Lucas",
+    "title": "Sea Of Lights",
+    "remix": "Simon Pitt Remix",
+    "bpm": 138,
+    "keyNumber": 2,
+    "keyType": "B"
+  },
+  {
+    "cd": 63,
+    "number": 1,
+    "artist": "Abraham Leoga",
+    "title": "Insolution",
+    "remix": "Craving Remix",
+    "bpm": 132,
+    "keyNumber": 6,
+    "keyType": "A"
+  },
+  {
+    "cd": 63,
+    "number": 2,
+    "artist": "Airwave",
+    "title": "Ladyblue",
+    "remix": "Original Beat",
+    "bpm": 132,
+    "keyNumber": 6,
+    "keyType": "A"
+  },
+  {
+    "cd": 63,
+    "number": 3,
+    "artist": "Arnej",
+    "title": "The Strings That Bind Us",
+    "remix": "8 Wonders Mix",
+    "bpm": 132,
+    "keyNumber": 3,
+    "keyType": "A"
+  },
+  {
+    "cd": 63,
+    "number": 4,
+    "artist": "Dosem",
+    "title": "Beach Kisses",
+    "remix": "Joris Voorn Green Mix",
+    "bpm": 127,
+    "keyNumber": 2,
+    "keyType": "A"
+  },
+  {
+    "cd": 63,
+    "number": 5,
+    "artist": "Duderstadt & Kirsty Hawkshaw",
+    "title": "Beautitude",
+    "remix": "Mat Zo Remix",
+    "bpm": 132,
+    "keyNumber": 5,
+    "keyType": "A"
+  },
+  {
+    "cd": 63,
+    "number": 6,
+    "artist": "Myon & Shane54",
+    "title": "Not A Lot Left",
+    "remix": "",
+    "bpm": 132,
+    "keyNumber": 8,
+    "keyType": "B"
+  },
+  {
+    "cd": 63,
+    "number": 7,
+    "artist": "Organ Donors",
+    "title": "Dr Kaotica",
+    "remix": "Original Mix",
+    "bpm": 134,
+    "keyNumber": 12,
+    "keyType": "A"
+  },
+  {
+    "cd": 63,
+    "number": 8,
+    "artist": "Robo Burian",
+    "title": "Forum",
+    "remix": "",
+    "bpm": 134,
+    "keyNumber": 11,
+    "keyType": "A"
+  },
+  {
+    "cd": 63,
+    "number": 9,
+    "artist": "Sweet Life",
+    "title": "Aurora",
+    "remix": "Veekey Remix",
+    "bpm": 128,
+    "keyNumber": 8,
+    "keyType": "A"
+  },
+  {
+    "cd": 64,
+    "number": 1,
+    "artist": "Arty",
+    "title": "Rush",
+    "remix": "Original Mix",
+    "bpm": 133,
+    "keyNumber": 5,
+    "keyType": "A"
+  },
+  {
+    "cd": 64,
+    "number": 2,
+    "artist": "Bartlett & Dyor",
+    "title": "Floating Beyond",
+    "remix": "Lange Remix",
+    "bpm": 135,
+    "keyNumber": 9,
+    "keyType": "A"
+  },
+  {
+    "cd": 64,
+    "number": 3,
+    "artist": "Cold Blue",
+    "title": "The Wolf",
+    "remix": "Pedro Del Mar Spark7 Remix",
+    "bpm": 132,
+    "keyNumber": 11,
+    "keyType": "B"
+  },
+  {
+    "cd": 64,
+    "number": 4,
+    "artist": "Darren Tate Vs Jono Grant",
+    "title": "Let Th eLight Shine In 2010",
+    "remix": "Arty Remix",
+    "bpm": 130,
+    "keyNumber": 7,
+    "keyType": "B"
+  },
+  {
+    "cd": 64,
+    "number": 5,
+    "artist": "Jaytech Feat Melody Gough",
+    "title": "Gray Horizon",
+    "remix": "Original Mix",
+    "bpm": 125,
+    "keyNumber": 12,
+    "keyType": "A"
+  },
+  {
+    "cd": 64,
+    "number": 6,
+    "artist": "Madstring & Molly",
+    "title": "Feel Like",
+    "remix": "",
+    "bpm": 130,
+    "keyNumber": 8,
+    "keyType": "A"
+  },
+  {
+    "cd": 64,
+    "number": 7,
+    "artist": "Mark Koster",
+    "title": "Abrus Sculpture",
+    "remix": "Original Mix",
+    "bpm": 130,
+    "keyNumber": 10,
+    "keyType": "B"
+  },
+  {
+    "cd": 64,
+    "number": 8,
+    "artist": "Virtual Vault Feat. Orjan",
+    "title": "Too Late",
+    "remix": "Original Mix",
+    "bpm": 136,
+    "keyNumber": 5,
+    "keyType": "A"
+  },
+  {
+    "cd": 64,
+    "number": 9,
+    "artist": "Zoltan Kontes feat Tania Zygar",
+    "title": "Take hold Of Me",
+    "remix": "",
+    "bpm": 128,
+    "keyNumber": 5,
+    "keyType": "A"
+  }
+]
+}

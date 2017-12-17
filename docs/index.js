@@ -14601,47 +14601,139 @@ var _elm_lang$http$Http$stringPart = _elm_lang$http$Http$StringPart;
 var _user$project$Main$subscriptions = function (state) {
 	return _elm_lang$core$Platform_Sub$none;
 };
+var _user$project$Main$formatPitch = function (pitch) {
+	var _p0 = pitch;
+	if (_p0 === 0.0) {
+		return '0.00';
+	} else {
+		return _elm_lang$core$Basics$toString(
+			A3(
+				_elm_lang$core$Basics$flip,
+				F2(
+					function (x, y) {
+						return x / y;
+					}),
+				100.0,
+				_elm_lang$core$Basics$toFloat(
+					A2(
+						F2(
+							function (x, y) {
+								return x * y;
+							}),
+						2,
+						_elm_lang$core$Basics$round(
+							A3(
+								_elm_lang$core$Basics$flip,
+								F2(
+									function (x, y) {
+										return x / y;
+									}),
+								2.0,
+								A2(
+									F2(
+										function (x, y) {
+											return x * y;
+										}),
+									100,
+									A2(
+										F2(
+											function (x, y) {
+												return x * y;
+											}),
+										100,
+										pitch))))))));
+	}
+};
 var _user$project$Main$selectedStyle = F2(
 	function (track, maybeSelected) {
 		var isSelected = function () {
-			var _p0 = maybeSelected;
-			if (_p0.ctor === 'Just') {
-				var _p1 = _p0._0;
-				return _elm_lang$core$Native_Utils.eq(_p1.cd, track.cd) && _elm_lang$core$Native_Utils.eq(_p1.number, track.number);
+			var _p1 = maybeSelected;
+			if (_p1.ctor === 'Just') {
+				var _p2 = _p1._0;
+				return _elm_lang$core$Native_Utils.eq(_p2.cd, track.cd) && _elm_lang$core$Native_Utils.eq(_p2.number, track.number);
 			} else {
 				return false;
 			}
 		}();
-		var _p2 = isSelected;
-		if (_p2 === true) {
+		var _p3 = isSelected;
+		if (_p3 === true) {
 			return {ctor: '_Tuple2', _0: 'border', _1: '1px solid red'};
 		} else {
-			return {ctor: '_Tuple2', _0: 'border', _1: '1px solid black'};
+			return {ctor: '_Tuple2', _0: 'border', _1: '1px solid white'};
 		}
 	});
-var _user$project$Main$diff = F2(
+var _user$project$Main$diffBpm = F2(
 	function (a, b) {
 		var d = a - b;
 		return (_elm_lang$core$Native_Utils.cmp(d, 0) > 0) ? d : (d * -1);
 	});
+var _user$project$Main$diffKeyNumber = F2(
+	function (a, b) {
+		var d = function () {
+			var _p4 = {ctor: '_Tuple2', _0: a, _1: b};
+			_v3_6:
+			do {
+				if (_p4.ctor === '_Tuple2') {
+					switch (_p4._0) {
+						case 1:
+							switch (_p4._1) {
+								case 12:
+									return 1;
+								case 11:
+									return 2;
+								default:
+									break _v3_6;
+							}
+						case 11:
+							if (_p4._1 === 1) {
+								return 2;
+							} else {
+								break _v3_6;
+							}
+						case 2:
+							if (_p4._1 === 12) {
+								return 2;
+							} else {
+								break _v3_6;
+							}
+						case 12:
+							switch (_p4._1) {
+								case 1:
+									return 1;
+								case 2:
+									return 2;
+								default:
+									break _v3_6;
+							}
+						default:
+							break _v3_6;
+					}
+				} else {
+					break _v3_6;
+				}
+			} while(false);
+			return a - b;
+		}();
+		return (_elm_lang$core$Native_Utils.cmp(d, 0) > 0) ? d : (d * -1);
+	});
 var _user$project$Main$matches = F3(
 	function (library, playlist, maybeSelected) {
-		var _p3 = maybeSelected;
-		if (_p3.ctor === 'Just') {
-			var _p6 = _p3._0;
+		var _p5 = maybeSelected;
+		if (_p5.ctor === 'Just') {
+			var _p8 = _p5._0;
 			return A2(
 				_elm_lang$core$List$filter,
 				function (track) {
-					var similar = (_elm_lang$core$Native_Utils.eq(track.keyNumber, _p6.keyNumber) && (_elm_lang$core$Native_Utils.eq(track.keyType, _p6.keyType) && (_elm_lang$core$Native_Utils.cmp(
-						A2(_user$project$Main$diff, track.bpm, _p6.bpm),
-						2) < 1))) || ((_elm_lang$core$Native_Utils.eq(track.bpm, _p6.bpm) && _elm_lang$core$Native_Utils.eq(track.keyNumber, _p6.keyNumber)) || (_elm_lang$core$Native_Utils.eq(track.keyType, _p6.keyType) && (_elm_lang$core$Native_Utils.eq(track.bpm, _p6.bpm) && (_elm_lang$core$Native_Utils.cmp(
-						A2(_user$project$Main$diff, track.keyNumber, _p6.keyNumber),
+					var similar = (_elm_lang$core$Native_Utils.eq(track.keyNumber, _p8.keyNumber) && (_elm_lang$core$Native_Utils.eq(track.keyType, _p8.keyType) && (_elm_lang$core$Native_Utils.cmp(
+						A2(_user$project$Main$diffBpm, track.bpm, _p8.bpm),
+						2.0) < 1))) || ((_elm_lang$core$Native_Utils.eq(track.bpm, _p8.bpm) && _elm_lang$core$Native_Utils.eq(track.keyNumber, _p8.keyNumber)) || (_elm_lang$core$Native_Utils.eq(track.keyType, _p8.keyType) && (_elm_lang$core$Native_Utils.eq(track.bpm, _p8.bpm) && (_elm_lang$core$Native_Utils.cmp(
+						A2(_user$project$Main$diffKeyNumber, track.keyNumber, _p8.keyNumber),
 						2) < 1))));
 					return A2(_elm_community$list_extra$List_Extra$notMember, track, playlist) && function () {
-						var _p4 = maybeSelected;
-						if (_p4.ctor === 'Just') {
-							var _p5 = _p4._0;
-							return (!_elm_lang$core$Native_Utils.eq(track.cd, _p5.cd)) || ((!_elm_lang$core$Native_Utils.eq(track.number, _p5.number)) && similar);
+						var _p6 = maybeSelected;
+						if (_p6.ctor === 'Just') {
+							var _p7 = _p6._0;
+							return ((!_elm_lang$core$Native_Utils.eq(track.cd, _p7.cd)) || (!_elm_lang$core$Native_Utils.eq(track.number, _p7.number))) && similar;
 						} else {
 							return similar;
 						}
@@ -14652,6 +14744,60 @@ var _user$project$Main$matches = F3(
 			return {ctor: '[]'};
 		}
 	});
+var _user$project$Main$targetAdjustment = F2(
+	function (begin, end) {
+		return (end / begin) - 1;
+	});
+var _user$project$Main$targetBpm = F2(
+	function (a, b) {
+		var avg = ((a - b) / 2.0) + b;
+		return _elm_lang$core$Native_Utils.eq(
+			_elm_lang$core$Basics$toFloat(
+				_elm_lang$core$Basics$round(avg)),
+			avg) ? (avg - 0.5) : avg;
+	});
+var _user$project$Main$setBeginPitch = function (playlistTracks) {
+	return A2(
+		_elm_lang$core$List$indexedMap,
+		F2(
+			function (index, playlistTrack) {
+				var _p9 = A2(_elm_community$list_extra$List_Extra$getAt, index - 1, playlistTracks);
+				if (_p9.ctor === 'Just') {
+					var track = playlistTrack.track;
+					var beginPitch = A2(
+						_user$project$Main$targetAdjustment,
+						track.bpm,
+						A2(_user$project$Main$targetBpm, track.bpm, _p9._0.track.bpm));
+					return _elm_lang$core$Native_Utils.update(
+						playlistTrack,
+						{beginPitch: beginPitch});
+				} else {
+					return playlistTrack;
+				}
+			}),
+		playlistTracks);
+};
+var _user$project$Main$setEndPitch = function (playlistTracks) {
+	return A2(
+		_elm_lang$core$List$indexedMap,
+		F2(
+			function (index, playlistTrack) {
+				var _p10 = A2(_elm_community$list_extra$List_Extra$getAt, index + 1, playlistTracks);
+				if (_p10.ctor === 'Just') {
+					var track = playlistTrack.track;
+					var endPitch = A2(
+						_user$project$Main$targetAdjustment,
+						track.bpm,
+						A2(_user$project$Main$targetBpm, track.bpm, _p10._0.track.bpm));
+					return _elm_lang$core$Native_Utils.update(
+						playlistTrack,
+						{endPitch: endPitch});
+				} else {
+					return playlistTrack;
+				}
+			}),
+		playlistTracks);
+};
 var _user$project$Main$iContains = F2(
 	function (a, b) {
 		return A2(
@@ -14666,13 +14812,45 @@ var _user$project$Main$filter = F2(
 			function (track) {
 				return _elm_lang$core$Native_Utils.eq(
 					_elm_lang$core$String$trim(query),
-					'') || (A2(
+					'') || A2(
 					_user$project$Main$iContains,
 					query,
-					_elm_lang$core$Basics$toString(track.cd)) || (A2(
-					_user$project$Main$iContains,
-					query,
-					_elm_lang$core$Basics$toString(track.number)) || (A2(_user$project$Main$iContains, query, track.artist) || (A2(_user$project$Main$iContains, query, track.title) || A2(_user$project$Main$iContains, query, track.mix)))));
+					A2(
+						_elm_lang$core$String$join,
+						'',
+						{
+							ctor: '::',
+							_0: _elm_lang$core$Basics$toString(track.cd),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$core$Basics$toString(track.number),
+								_1: {
+									ctor: '::',
+									_0: track.artist,
+									_1: {
+										ctor: '::',
+										_0: track.title,
+										_1: {
+											ctor: '::',
+											_0: track.mix,
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$core$Basics$toString(track.keyNumber),
+												_1: {
+													ctor: '::',
+													_0: _elm_lang$core$Basics$toString(track.keyType),
+													_1: {
+														ctor: '::',
+														_0: _elm_lang$core$Basics$toString(track.bpm),
+														_1: {ctor: '[]'}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}));
 			},
 			tracks);
 	});
@@ -14684,11 +14862,36 @@ var _user$project$Main$Track = F8(
 	function (a, b, c, d, e, f, g, h) {
 		return {cd: a, number: b, artist: c, title: d, mix: e, bpm: f, keyNumber: g, keyType: h};
 	});
+var _user$project$Main$PlaylistTrack = F4(
+	function (a, b, c, d) {
+		return {index: a, track: b, endPitch: c, beginPitch: d};
+	});
+var _user$project$Main$playlist = function (tracks) {
+	return _user$project$Main$setBeginPitch(
+		_user$project$Main$setEndPitch(
+			A2(
+				_elm_lang$core$List$map,
+				function (indexTrack) {
+					return A4(
+						_user$project$Main$PlaylistTrack,
+						_elm_lang$core$Tuple$first(indexTrack),
+						_elm_lang$core$Tuple$second(indexTrack),
+						0.0,
+						0.0);
+				},
+				A2(
+					_elm_lang$core$List$indexedMap,
+					F2(
+						function (v0, v1) {
+							return {ctor: '_Tuple2', _0: v0, _1: v1};
+						}),
+					tracks))));
+};
 var _user$project$Main$B = {ctor: 'B'};
 var _user$project$Main$A = {ctor: 'A'};
 var _user$project$Main$keyType = function (value) {
-	var _p7 = value;
-	if (_p7 === 'A') {
+	var _p11 = value;
+	if (_p11 === 'A') {
 		return _user$project$Main$A;
 	} else {
 		return _user$project$Main$B;
@@ -14706,7 +14909,7 @@ var _user$project$Main$trackDecoder = A9(
 	A2(_elm_lang$core$Json_Decode$field, 'artist', _elm_lang$core$Json_Decode$string),
 	A2(_elm_lang$core$Json_Decode$field, 'title', _elm_lang$core$Json_Decode$string),
 	A2(_elm_lang$core$Json_Decode$field, 'remix', _elm_lang$core$Json_Decode$string),
-	A2(_elm_lang$core$Json_Decode$field, 'bpm', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'bpm', _elm_lang$core$Json_Decode$float),
 	A2(_elm_lang$core$Json_Decode$field, 'keyNumber', _elm_lang$core$Json_Decode$int),
 	A2(
 		_elm_lang$core$Json_Decode$field,
@@ -14726,7 +14929,7 @@ var _user$project$Main$LoadedTracks = function (a) {
 var _user$project$Main$loadTracks = A2(
 	_elm_lang$http$Http$send,
 	_user$project$Main$LoadedTracks,
-	A2(_elm_lang$http$Http$get, 'tracks.json', _user$project$Main$tracksDecoder));
+	A2(_elm_lang$http$Http$get, 'static/tracks.json', _user$project$Main$tracksDecoder));
 var _user$project$Main$init = {
 	ctor: '_Tuple2',
 	_0: {
@@ -14739,23 +14942,23 @@ var _user$project$Main$init = {
 };
 var _user$project$Main$update = F2(
 	function (msg, state) {
-		var _p8 = msg;
-		switch (_p8.ctor) {
+		var _p12 = msg;
+		switch (_p12.ctor) {
 			case 'AddTrack':
 				var playlist = function () {
-					var _p9 = A2(
+					var _p13 = A2(
 						_elm_community$list_extra$List_Extra$find,
 						function (t) {
-							return _elm_lang$core$Native_Utils.eq(t.cd, _p8._0) && _elm_lang$core$Native_Utils.eq(t.number, _p8._1);
+							return _elm_lang$core$Native_Utils.eq(t.cd, _p12._0) && _elm_lang$core$Native_Utils.eq(t.number, _p12._1);
 						},
 						state.library);
-					if (_p9.ctor === 'Just') {
+					if (_p13.ctor === 'Just') {
 						return A2(
 							_elm_lang$core$List$append,
 							state.playlist,
 							{
 								ctor: '::',
-								_0: _p9._0,
+								_0: _p13._0,
 								_1: {ctor: '[]'}
 							});
 					} else {
@@ -14770,7 +14973,7 @@ var _user$project$Main$update = F2(
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'RemoveTrack':
-				var playlist = A2(_elm_community$list_extra$List_Extra$removeAt, _p8._0, state.playlist);
+				var playlist = A2(_elm_community$list_extra$List_Extra$removeAt, _p12._0, state.playlist);
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
@@ -14779,13 +14982,13 @@ var _user$project$Main$update = F2(
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'ToggleSelection':
-				var _p12 = _p8._0;
-				var justSelected = _elm_lang$core$Maybe$Just(_p12);
+				var _p16 = _p12._0;
+				var justSelected = _elm_lang$core$Maybe$Just(_p16);
 				var selected = function () {
-					var _p10 = state.selected;
-					if (_p10.ctor === 'Just') {
-						var _p11 = _p10._0;
-						return (_elm_lang$core$Native_Utils.eq(_p11.cd, _p12.cd) && _elm_lang$core$Native_Utils.eq(_p11.number, _p12.number)) ? _elm_lang$core$Maybe$Nothing : justSelected;
+					var _p14 = state.selected;
+					if (_p14.ctor === 'Just') {
+						var _p15 = _p14._0;
+						return (_elm_lang$core$Native_Utils.eq(_p15.cd, _p16.cd) && _elm_lang$core$Native_Utils.eq(_p15.number, _p16.number)) ? _elm_lang$core$Maybe$Nothing : justSelected;
 					} else {
 						return justSelected;
 					}
@@ -14802,22 +15005,23 @@ var _user$project$Main$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						state,
-						{libraryFilter: _p8._0}),
+						{libraryFilter: _p12._0, selected: _elm_lang$core$Maybe$Nothing}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'LoadTracks':
 				return {ctor: '_Tuple2', _0: state, _1: _user$project$Main$loadTracks};
 			case 'LoadedTracks':
-				var _p13 = _p8._0;
-				if (_p13.ctor === 'Ok') {
+				var _p17 = _p12._0;
+				if (_p17.ctor === 'Ok') {
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							state,
-							{library: _p13._0}),
+							{library: _p17._0}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				} else {
+					var _p18 = A2(_elm_lang$core$Debug$log, 'err e', _p17._0);
 					return {ctor: '_Tuple2', _0: state, _1: _elm_lang$core$Platform_Cmd$none};
 				}
 			default:
@@ -14849,9 +15053,11 @@ var _user$project$Main$RemoveTrack = function (a) {
 	return {ctor: 'RemoveTrack', _0: a};
 };
 var _user$project$Main$playlistLi = F2(
-	function (maybeSelected, index_track) {
-		var track = _elm_lang$core$Tuple$second(index_track);
-		var index = _elm_lang$core$Tuple$first(index_track);
+	function (maybeSelected, playlistTrack) {
+		var endPitch = playlistTrack.endPitch;
+		var beginPitch = playlistTrack.beginPitch;
+		var track = playlistTrack.track;
+		var index = playlistTrack.index;
 		return A2(
 			_elm_lang$html$Html$li,
 			{
@@ -14883,17 +15089,62 @@ var _user$project$Main$playlistLi = F2(
 						_0: _elm_lang$html$Html$text(
 							A2(
 								_elm_lang$core$Basics_ops['++'],
-								track.artist,
+								_elm_lang$core$Basics$toString(track.cd),
 								A2(
 									_elm_lang$core$Basics_ops['++'],
-									' - ',
+									'#',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										track.title,
+										_elm_lang$core$Basics$toString(track.number),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
-											' (',
-											A2(_elm_lang$core$Basics_ops['++'], track.mix, ')')))))),
+											' ',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												track.artist,
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													' - ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														track.title,
+														A2(
+															_elm_lang$core$Basics_ops['++'],
+															' (',
+															A2(
+																_elm_lang$core$Basics_ops['++'],
+																track.mix,
+																A2(
+																	_elm_lang$core$Basics_ops['++'],
+																	')',
+																	A2(
+																		_elm_lang$core$Basics_ops['++'],
+																		' ',
+																		A2(
+																			_elm_lang$core$Basics_ops['++'],
+																			_elm_lang$core$Basics$toString(track.keyNumber),
+																			A2(
+																				_elm_lang$core$Basics_ops['++'],
+																				_elm_lang$core$Basics$toString(track.keyType),
+																				A2(
+																					_elm_lang$core$Basics_ops['++'],
+																					_elm_lang$core$Basics$toString(track.bpm),
+																					A2(
+																						_elm_lang$core$Basics_ops['++'],
+																						' ',
+																						A2(
+																							_elm_lang$core$Basics_ops['++'],
+																							_user$project$Main$formatPitch(beginPitch),
+																							A2(
+																								_elm_lang$core$Basics_ops['++'],
+																								'%',
+																								A2(
+																									_elm_lang$core$Basics_ops['++'],
+																									' -> ',
+																									A2(
+																										_elm_lang$core$Basics_ops['++'],
+																										_user$project$Main$formatPitch(endPitch),
+																										'%')))))))))))))))))))),
 						_1: {ctor: '[]'}
 					}),
 				_1: {
@@ -14948,32 +15199,44 @@ var _user$project$Main$libraryLi = F2(
 						_0: _elm_lang$html$Html$text(
 							A2(
 								_elm_lang$core$Basics_ops['++'],
-								track.artist,
+								_elm_lang$core$Basics$toString(track.cd),
 								A2(
 									_elm_lang$core$Basics_ops['++'],
-									' - ',
+									'#',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										track.title,
+										_elm_lang$core$Basics$toString(track.number),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
-											' (',
+											' ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												track.mix,
+												track.artist,
 												A2(
 													_elm_lang$core$Basics_ops['++'],
-													')',
+													' - ',
 													A2(
 														_elm_lang$core$Basics_ops['++'],
-														' ',
+														track.title,
 														A2(
 															_elm_lang$core$Basics_ops['++'],
-															_elm_lang$core$Basics$toString(track.keyNumber),
+															' (',
 															A2(
 																_elm_lang$core$Basics_ops['++'],
-																_elm_lang$core$Basics$toString(track.keyType),
-																_elm_lang$core$Basics$toString(track.bpm))))))))))),
+																track.mix,
+																A2(
+																	_elm_lang$core$Basics_ops['++'],
+																	')',
+																	A2(
+																		_elm_lang$core$Basics_ops['++'],
+																		' ',
+																		A2(
+																			_elm_lang$core$Basics_ops['++'],
+																			_elm_lang$core$Basics$toString(track.keyNumber),
+																			A2(
+																				_elm_lang$core$Basics_ops['++'],
+																				_elm_lang$core$Basics$toString(track.keyType),
+																				_elm_lang$core$Basics$toString(track.bpm))))))))))))))),
 						_1: {ctor: '[]'}
 					}),
 				_1: {
@@ -15024,17 +15287,44 @@ var _user$project$Main$matchLi = F2(
 						_0: _elm_lang$html$Html$text(
 							A2(
 								_elm_lang$core$Basics_ops['++'],
-								track.artist,
+								_elm_lang$core$Basics$toString(track.cd),
 								A2(
 									_elm_lang$core$Basics_ops['++'],
-									' - ',
+									'#',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										track.title,
+										_elm_lang$core$Basics$toString(track.number),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
-											' (',
-											A2(_elm_lang$core$Basics_ops['++'], track.mix, ')')))))),
+											' ',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												track.artist,
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													' - ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														track.title,
+														A2(
+															_elm_lang$core$Basics_ops['++'],
+															' (',
+															A2(
+																_elm_lang$core$Basics_ops['++'],
+																track.mix,
+																A2(
+																	_elm_lang$core$Basics_ops['++'],
+																	')',
+																	A2(
+																		_elm_lang$core$Basics_ops['++'],
+																		' ',
+																		A2(
+																			_elm_lang$core$Basics_ops['++'],
+																			_elm_lang$core$Basics$toString(track.keyNumber),
+																			A2(
+																				_elm_lang$core$Basics_ops['++'],
+																				_elm_lang$core$Basics$toString(track.keyType),
+																				_elm_lang$core$Basics$toString(track.bpm))))))))))))))),
 						_1: {ctor: '[]'}
 					}),
 				_1: {
@@ -15100,13 +15390,7 @@ var _user$project$Main$view = function (state) {
 								A2(
 									_elm_lang$core$List$map,
 									_user$project$Main$playlistLi(state.selected),
-									A2(
-										_elm_community$list_extra$List_Extra$zip,
-										A2(
-											_elm_lang$core$List$range,
-											0,
-											_elm_lang$core$List$length(state.playlist)),
-										state.playlist))),
+									_user$project$Main$playlist(state.playlist))),
 							_1: {
 								ctor: '::',
 								_0: A2(
@@ -15142,7 +15426,7 @@ var _user$project$Main$NoOp = {ctor: 'NoOp'};
 var Elm = {};
 Elm['Main'] = Elm['Main'] || {};
 if (typeof _user$project$Main$main !== 'undefined') {
-    _user$project$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Main.Msg":{"args":[],"tags":{"LoadedTracks":["Result.Result Http.Error (List Main.Track)"],"AddTrack":["Int","Int"],"LibraryFilter":["String"],"ToggleSelection":["Main.Track"],"LoadTracks":[],"NoOp":[],"RemoveTrack":["Int"]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Main.KeyType":{"args":[],"tags":{"A":[],"B":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}}},"aliases":{"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Main.Track":{"args":[],"type":"{ cd : Int , number : Int , artist : String , title : String , mix : String , bpm : Int , keyNumber : Int , keyType : Main.KeyType }"}},"message":"Main.Msg"},"versions":{"elm":"0.18.0"}});
+    _user$project$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Main.Msg":{"args":[],"tags":{"LoadedTracks":["Result.Result Http.Error (List Main.Track)"],"AddTrack":["Int","Int"],"LibraryFilter":["String"],"ToggleSelection":["Main.Track"],"LoadTracks":[],"NoOp":[],"RemoveTrack":["Int"]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Main.KeyType":{"args":[],"tags":{"A":[],"B":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}}},"aliases":{"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Main.Track":{"args":[],"type":"{ cd : Int , number : Int , artist : String , title : String , mix : String , bpm : Float , keyNumber : Int , keyType : Main.KeyType }"}},"message":"Main.Msg"},"versions":{"elm":"0.18.0"}});
 }
 
 if (true)
