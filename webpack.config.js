@@ -1,43 +1,51 @@
-var path = require('path');
+const path = require('path');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
+  mode: 'development',
   entry: './static/index.js',
 
   output: {
-      path: path.join(__dirname, "dist"),
-      filename: 'index.js'
+    path: path.join(__dirname, 'dist'),
+    filename: 'index.js',
+    clean: true
   },
 
   resolve: {
-    modules: [
-      path.join(__dirname, "src"),
-      "node_modules"
-    ],
     extensions: ['.js', '.elm']
   },
 
   module: {
-    loaders: [{
-        test: /\.html$/,
-        exclude: /node_modules/,
-        loader: 'file-loader?name=[name].[ext]'
-      },
+    rules: [
       {
         test: /\.elm$/,
         exclude: [/elm-stuff/, /node_modules/],
-        // This is what you need in your own work
-        loader: "elm-webpack-loader",
-        // loader: '../index.js',
-        options: {
-          debug: true,
-          warn: true
+        use: {
+          loader: 'elm-webpack-loader',
+          options: {
+            debug: true
+          }
         }
       }
     ]
   },
 
+  plugins: [
+    new CopyPlugin({
+      patterns: [
+        { from: 'static/index.html', to: 'index.html' },
+        { from: 'static/tracks.json', to: 'static/tracks.json' }
+      ]
+    })
+  ],
+
   devServer: {
-    inline: true,
-    stats: 'errors-only'
+    port: 3001,
+    static: {
+      directory: path.join(__dirname, 'dist')
+    },
+    devMiddleware: {
+      stats: 'errors-only'
+    }
   }
 };

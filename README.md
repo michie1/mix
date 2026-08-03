@@ -17,14 +17,16 @@ The playlist also shows the pitch change at the start and end of each track.
 Install the project packages, then start the development server:
 
 ```sh
-npm install
-npm run dev
+yarn
+yarn dev
 ```
 
-Open `http://localhost:3000`.
+Open `http://localhost:3001`.
 
 ## Project files
 
 1. `src/Main.elm` contains the app state, matching logic, and views.
 2. `static/index.html` contains the page shell and styles.
 3. `static/tracks.json` contains the track library.
+
+The app uses Elm 0.19.2 and Webpack 5.

@@ -1,6 +1,5 @@
 'use strict';
 
-require('./index.html');
-var Elm = require('../src/Main');
+const { Elm } = require('../src/Main.elm');
 
-Elm.Main.embed(document.getElementById('main'));
+Elm.Main.init({ node: document.getElementById('main') });

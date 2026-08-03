@@ -2,17 +2,20 @@
   "name": "mix",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "dependencies": {
-    "elm-webpack-loader": "^4.4.0",
-    "file-loader": "^1.1.5"
+  "private": true,
+  "devDependencies": {
+    "copy-webpack-plugin": "^13.0.1",
+    "elm": "0.19.2-0",
+    "elm-webpack-loader": "^8.0.0",
+    "webpack": "^5.109.2",
+    "webpack-cli": "^7.2.2",
+    "webpack-dev-server": "^6.0.0"
   },
-  "devDependencies": {},
   "scripts": {
     "build": "webpack",
     "watch": "webpack --watch",
-    "dev": "webpack-dev-server --port 3000",
-    "errors": "webpack --display-error-details"
+    "dev": "webpack serve",
+    "errors": "webpack --stats-error-details"
   },
   "repository": {
     "type": "git",

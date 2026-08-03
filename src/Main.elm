@@ -1,6 +1,7 @@
 module Main exposing (main)
 
-import Html exposing (Html, Attribute, program, text, div, span, ul, li, h1, h2, p, input, button)
+import Browser
+import Html exposing (Attribute, Html, button, div, h1, h2, input, li, p, span, text, ul)
 import Html.Events exposing (onClick, onInput)
 import Html.Attributes exposing (value, class, classList, placeholder, attribute, type_)
 import List.Extra
@@ -50,8 +51,8 @@ type alias PlaylistTrack =
     }
 
 
-init : ( Model, Cmd Msg )
-init =
+init : () -> ( Model, Cmd Msg )
+init _ =
     ( { library = []
       , playlist = []
       , libraryFilter = ""
@@ -86,14 +87,14 @@ filter query tracks =
                 == ""
                 || (iContains query <|
                         String.join ""
-                            [ (toString track.cd)
-                            , (toString track.number)
+                            [ String.fromInt track.cd
+                            , String.fromInt track.number
                             , track.artist
                             , track.title
                             , track.mix
-                            , (toString track.keyNumber)
-                            , (toString track.keyType)
-                            , (toString track.bpm)
+                            , String.fromInt track.keyNumber
+                            , keyTypeToString track.keyType
+                            , String.fromFloat track.bpm
                             ]
                    )
         )
@@ -126,7 +127,7 @@ view state =
                 [ div [ class "panel-header" ]
                     [ div []
                         [ h2 [] [ text "Library" ]
-                        , span [ class "count" ] [ text <| toString (List.length visibleLibrary) ]
+                        , span [ class "count" ] [ text <| String.fromInt (List.length visibleLibrary) ]
                         ]
                     , libraryFilter state.libraryFilter
                     ]
@@ -137,7 +138,7 @@ view state =
                 [ div [ class "panel-header" ]
                     [ div []
                         [ h2 [] [ text "Playlist" ]
-                        , span [ class "count" ] [ text <| toString (List.length state.playlist) ]
+                        , span [ class "count" ] [ text <| String.fromInt (List.length state.playlist) ]
                         ]
                     ]
                 , if List.isEmpty state.playlist then
@@ -150,7 +151,7 @@ view state =
                 [ div [ class "panel-header" ]
                     [ div []
                         [ h2 [] [ text "Matches" ]
-                        , span [ class "count" ] [ text <| toString (List.length matchingTracks) ]
+                        , span [ class "count" ] [ text <| String.fromInt (List.length matchingTracks) ]
                         ]
                     , selectedTrackLabel state.selected
                     ]
@@ -165,6 +166,7 @@ view state =
                             ul [ class "track-list" ] <|
                                 List.map (matchLi state.selected selected) matchingTracks
                 ]
+            ]
         ]
 
 
@@ -204,11 +206,15 @@ selectedTrackLabel maybeTrack =
 
 playlist : List Track -> List PlaylistTrack
 playlist tracks =
-    List.indexedMap (,) tracks
-        |> List.map
-            (\indexTrack ->
-                PlaylistTrack (Tuple.first indexTrack) (Tuple.second indexTrack) 0.0 0.0
-            )
+    List.indexedMap
+        (\index track ->
+            { index = index
+            , track = track
+            , endPitch = 0.0
+            , beginPitch = 0.0
+            }
+        )
+        tracks
         |> setEndPitch
         |> setBeginPitch
 
@@ -290,25 +296,25 @@ libraryLi maybeSelected track =
 
 
 matchLi : Maybe Track -> Track -> MatchInfo -> Html Msg
-matchLi maybeSelected selected matchInfo =
+matchLi maybeSelected selected matchResult =
     let
         track =
-            matchInfo.track
+            matchResult.track
 
         matchDetails =
             [ span [ class "match-detail" ]
                 [ text <|
-                    if matchInfo.bpmDelta == 0 then
+                    if matchResult.bpmDelta == 0 then
                         "Exact BPM"
                     else
-                        "Δ " ++ toString matchInfo.bpmDelta ++ " BPM"
+                        "Δ " ++ String.fromFloat matchResult.bpmDelta ++ " BPM"
                 ]
             , span [ class "match-detail" ]
                 [ text <|
-                    if matchInfo.keyDelta == 0 && track.keyType == selected.keyType then
+                    if matchResult.keyDelta == 0 && track.keyType == selected.keyType then
                         "Exact key"
                     else
-                        "Δ " ++ toString matchInfo.keyDelta ++ " key"
+                        "Δ " ++ String.fromInt matchResult.keyDelta ++ " key"
                 ]
             ]
     in
@@ -327,16 +333,16 @@ trackRow maybeSelected track details actionLabel action =
             [ span [ class "track-title" ] [ text <| track.artist ++ " — " ++ track.title ]
             , span [ class "track-meta" ]
                 [ text <|
-                    toString track.cd
+                    String.fromInt track.cd
                         ++ "#"
-                        ++ toString track.number
+                        ++ String.fromInt track.number
                         ++ "  ·  "
                         ++ track.mix
                         ++ "  ·  Key "
-                        ++ toString track.keyNumber
-                        ++ toString track.keyType
+                        ++ String.fromInt track.keyNumber
+                        ++ keyTypeToString track.keyType
                         ++ "  ·  "
-                        ++ toString track.bpm
+                        ++ String.fromFloat track.bpm
                         ++ " BPM"
                 ]
             , span [ class "match-details" ] details
@@ -364,7 +370,7 @@ type alias MatchInfo =
 
 
 matches : List Track -> List Track -> Maybe Track -> List MatchInfo
-matches library playlist maybeSelected =
+matches library playlistTracks maybeSelected =
     case maybeSelected of
         Just selected ->
             List.filter
@@ -376,14 +382,9 @@ matches library playlist maybeSelected =
                                 || (track.keyType == selected.keyType && track.bpm == selected.bpm && (diffKeyNumber track.keyNumber selected.keyNumber) <= 2)
                             )
                     in
-                        List.Extra.notMember track playlist
-                            && case maybeSelected of
-                                Just selected ->
-                                    (track.cd /= selected.cd || track.number /= selected.number)
-                                        && similar
-
-                                Nothing ->
-                                    similar
+                        List.Extra.notMember track playlistTracks
+                            && (track.cd /= selected.cd || track.number /= selected.number)
+                            && similar
                 )
                 library
                 |> List.map (matchInfo selected)
@@ -415,7 +416,11 @@ matchInfo selected track =
             else
                 3
     in
-    MatchInfo track bpmDelta keyDelta rank
+    { track = track
+    , bpmDelta = bpmDelta
+    , keyDelta = keyDelta
+    , rank = rank
+    }
 
 
 compareMatches : MatchInfo -> MatchInfo -> Order
@@ -522,29 +527,12 @@ playlistLi maybeSelected playlistTrack =
 
 formatPitch : Float -> String
 formatPitch pitch =
-    case pitch of
-        0.0 ->
-            "0.00"
+    if abs pitch < 0.000001 then
+        "0.00"
 
-        _ ->
-            pitch
-                |> (*) 100
-                -- To percentage
-                |>
-                    (*) 100
-                -- Begin round to even decimals
-                |>
-                    flip (/) 2.0
-                |> round
-                |> (*) 2
-                -- End round to even decimals
-                -- Begin rounding 2 decimals
-                |>
-                    toFloat
-                |> flip (/) 100.0
-                -- End rounding
-                |>
-                    toString
+    else
+        String.fromFloat
+            (toFloat (round (pitch * 5000)) * 2 / 100)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -552,7 +540,7 @@ update msg state =
     case msg of
         AddTrack cd number ->
             let
-                playlist =
+                updatedPlaylist =
                     case
                         state.library
                             |> List.Extra.find (\t -> t.cd == cd && t.number == number)
@@ -563,24 +551,24 @@ update msg state =
                         Nothing ->
                             state.playlist
             in
-                ( { state | playlist = playlist }, Cmd.none )
+                ( { state | playlist = updatedPlaylist }, Cmd.none )
 
         RemoveTrack index ->
             let
-                playlist =
+                updatedPlaylist =
                     List.Extra.removeAt index state.playlist
             in
-                ( { state | playlist = playlist }, Cmd.none )
+                ( { state | playlist = updatedPlaylist }, Cmd.none )
 
         ToggleSelection track ->
             let
                 justSelected =
                     Just track
 
-                selected =
+                nextSelected =
                     case state.selected of
-                        Just selected ->
-                            if selected.cd == track.cd && selected.number == track.number then
+                        Just currentSelected ->
+                            if currentSelected.cd == track.cd && currentSelected.number == track.number then
                                 Nothing
                             else
                                 justSelected
@@ -589,7 +577,7 @@ update msg state =
                             justSelected
 
             in
-                ( { state | selected = selected, activePanel = MatchesPanel }, Cmd.none )
+                ( { state | selected = nextSelected, activePanel = MatchesPanel }, Cmd.none )
 
         ShowPanel panel ->
             ( { state | activePanel = panel }, Cmd.none )
@@ -621,9 +609,9 @@ subscriptions state =
     Sub.none
 
 
-main : Program Never Model Msg
+main : Program () Model Msg
 main =
-    program
+    Browser.element
         { init = init
         , update = update
         , subscriptions = subscriptions
@@ -633,7 +621,10 @@ main =
 
 loadTracks : Cmd Msg
 loadTracks =
-    Http.send LoadedTracks (Http.get "static/tracks.json" tracksDecoder)
+    Http.get
+        { url = "static/tracks.json"
+        , expect = Http.expectJson LoadedTracks tracksDecoder
+        }
 
 
 keyType : String -> KeyType
@@ -646,6 +637,16 @@ keyType value =
             B
 
 
+keyTypeToString : KeyType -> String
+keyTypeToString value =
+    case value of
+        A ->
+            "A"
+
+        B ->
+            "B"
+
+
 keyTypeDecoder : String -> Json.Decode.Decoder KeyType
 keyTypeDecoder value =
     Json.Decode.succeed (keyType value)
@@ -654,7 +655,17 @@ keyTypeDecoder value =
 trackDecoder : Json.Decode.Decoder Track
 trackDecoder =
     Json.Decode.map8
-        Track
+        (\cd number artist title mix bpm keyNumber decodedKeyType ->
+            { cd = cd
+            , number = number
+            , artist = artist
+            , title = title
+            , mix = mix
+            , bpm = bpm
+            , keyNumber = keyNumber
+            , keyType = decodedKeyType
+            }
+        )
         (Json.Decode.field "cd" Json.Decode.int)
         (Json.Decode.field "number" Json.Decode.int)
         (Json.Decode.field "artist" Json.Decode.string)
