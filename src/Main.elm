@@ -1,8 +1,8 @@
 module Main exposing (main)
 
-import Html exposing (Html, Attribute, program, text, div, span, ul, li, h2, input, button)
-import Html.Events exposing (onWithOptions, onClick, onInput)
-import Html.Attributes exposing (style, value)
+import Html exposing (Html, Attribute, program, text, div, span, ul, li, h1, h2, p, input, button)
+import Html.Events exposing (onClick, onInput)
+import Html.Attributes exposing (value, class, classList, placeholder, attribute, type_)
 import List.Extra
 import Json.Decode
 import Http
@@ -15,7 +15,14 @@ type alias Model =
     , selected :
         Maybe Track
         -- TODO: use index?
+    , activePanel : Panel
     }
+
+
+type Panel
+    = LibraryPanel
+    | PlaylistPanel
+    | MatchesPanel
 
 
 type KeyType
@@ -49,6 +56,7 @@ init =
       , playlist = []
       , libraryFilter = ""
       , selected = Nothing
+      , activePanel = LibraryPanel
       }
     , loadTracks
     )
@@ -59,6 +67,7 @@ type Msg
     | AddTrack Int Int
     | RemoveTrack Int
     | ToggleSelection Track
+    | ShowPanel Panel
     | LibraryFilter String
     | LoadTracks
     | LoadedTracks (Result Http.Error (List Track))
@@ -93,18 +102,104 @@ filter query tracks =
 
 view : Model -> Html Msg
 view state =
-    div []
-        [ h2 [] [ text "Library" ]
-        , libraryFilter state.libraryFilter
-        , ul [] <|
-            List.map (libraryLi state.selected) (filter state.libraryFilter state.library)
-        , h2 [] [ text "Playlist" ]
-        , ul [] <|
-            List.map (playlistLi state.selected) (playlist state.playlist)
-        , h2 [] [ text "Matches" ]
-        , ul [] <|
-            List.map (matchLi state.selected) (matches state.library state.playlist state.selected)
+    let
+        visibleLibrary =
+            filter state.libraryFilter state.library
+
+        matchingTracks =
+            matches state.library state.playlist state.selected
+    in
+    div [ class "app-shell" ]
+        [ div [ class "app-header" ]
+            [ div []
+                [ h1 [] [ text "Mix" ]
+                , p [] [ text "Build a smooth, compatible playlist." ]
+                ]
+            ]
+        , div [ class "panel-tabs", attribute "aria-label" "Choose a panel" ]
+            [ panelTab state.activePanel LibraryPanel "Library"
+            , panelTab state.activePanel PlaylistPanel "Playlist"
+            , panelTab state.activePanel MatchesPanel "Matches"
+            ]
+        , div [ class "workspace" ]
+            [ div [ panelClass state.activePanel LibraryPanel ]
+                [ div [ class "panel-header" ]
+                    [ div []
+                        [ h2 [] [ text "Library" ]
+                        , span [ class "count" ] [ text <| toString (List.length visibleLibrary) ]
+                        ]
+                    , libraryFilter state.libraryFilter
+                    ]
+                , ul [ class "track-list" ] <|
+                    List.map (libraryLi state.selected) visibleLibrary
+                ]
+            , div [ panelClass state.activePanel PlaylistPanel ]
+                [ div [ class "panel-header" ]
+                    [ div []
+                        [ h2 [] [ text "Playlist" ]
+                        , span [ class "count" ] [ text <| toString (List.length state.playlist) ]
+                        ]
+                    ]
+                , if List.isEmpty state.playlist then
+                    emptyState "Your playlist is empty" "Add tracks from the library or matches."
+                  else
+                    ul [ class "track-list playlist-list" ] <|
+                        List.map (playlistLi state.selected) (playlist state.playlist)
+                ]
+            , div [ panelClass state.activePanel MatchesPanel ]
+                [ div [ class "panel-header" ]
+                    [ div []
+                        [ h2 [] [ text "Matches" ]
+                        , span [ class "count" ] [ text <| toString (List.length matchingTracks) ]
+                        ]
+                    , selectedTrackLabel state.selected
+                    ]
+                , case state.selected of
+                    Nothing ->
+                        emptyState "Select a track" "We will show compatible tracks here."
+
+                    Just selected ->
+                        if List.isEmpty matchingTracks then
+                            emptyState "No matches found" "Try another track from your library or playlist."
+                        else
+                            ul [ class "track-list" ] <|
+                                List.map (matchLi state.selected selected) matchingTracks
+                ]
         ]
+
+
+panelTab : Panel -> Panel -> String -> Html Msg
+panelTab activePanel panel label =
+    button
+        [ type_ "button"
+        , classList [ ( "panel-tab", True ), ( "is-active", activePanel == panel ) ]
+        , onClick <| ShowPanel panel
+        ]
+        [ text label ]
+
+
+panelClass : Panel -> Panel -> Attribute Msg
+panelClass activePanel panel =
+    classList [ ( "panel", True ), ( "is-active", activePanel == panel ) ]
+
+
+emptyState : String -> String -> Html Msg
+emptyState heading description =
+    div [ class "empty-state" ]
+        [ p [ class "empty-heading" ] [ text heading ]
+        , p [] [ text description ]
+        ]
+
+
+selectedTrackLabel : Maybe Track -> Html Msg
+selectedTrackLabel maybeTrack =
+    case maybeTrack of
+        Just track ->
+            p [ class "panel-context" ]
+                [ text <| "For " ++ track.artist ++ " — " ++ track.title ]
+
+        Nothing ->
+            p [ class "panel-context" ] [ text "Choose a track to start" ]
 
 
 playlist : List Track -> List PlaylistTrack
@@ -179,63 +274,96 @@ targetAdjustment begin end =
 
 libraryFilter : String -> Html Msg
 libraryFilter query =
-    input [ value query, onInput LibraryFilter ] []
+    input
+        [ class "search-input"
+        , value query
+        , placeholder "Search tracks"
+        , attribute "aria-label" "Search the library"
+        , onInput LibraryFilter
+        ]
+        []
 
 
 libraryLi : Maybe Track -> Track -> Html Msg
 libraryLi maybeSelected track =
-    li
-        [ --[ onClick <| ToggleSelection track
-          --, onDoubleClickWithPreventDefault <| AddTrack track.cd track.number
-          style [ selectedStyle track maybeSelected ]
-        ]
-        [ span [ onClick <| ToggleSelection track ]
-            [ text <|
-                toString track.cd
-                    ++ "#"
-                    ++ toString track.number
-                    ++ " "
-                    ++ track.artist
-                    ++ " - "
-                    ++ track.title
-                    ++ " ("
-                    ++ track.mix
-                    ++ ")"
-                    ++ " "
-                    ++ toString track.keyNumber
-                    ++ toString track.keyType
-                    ++ toString track.bpm
+    trackRow maybeSelected track [] "Add" (AddTrack track.cd track.number)
+
+
+matchLi : Maybe Track -> Track -> MatchInfo -> Html Msg
+matchLi maybeSelected selected matchInfo =
+    let
+        track =
+            matchInfo.track
+
+        matchDetails =
+            [ span [ class "match-detail" ]
+                [ text <|
+                    if matchInfo.bpmDelta == 0 then
+                        "Exact BPM"
+                    else
+                        "Δ " ++ toString matchInfo.bpmDelta ++ " BPM"
+                ]
+            , span [ class "match-detail" ]
+                [ text <|
+                    if matchInfo.keyDelta == 0 && track.keyType == selected.keyType then
+                        "Exact key"
+                    else
+                        "Δ " ++ toString matchInfo.keyDelta ++ " key"
+                ]
             ]
-        , span [ onClick <| AddTrack track.cd track.number ] [ text "+" ]
-        ]
+    in
+    trackRow maybeSelected track matchDetails "Add" (AddTrack track.cd track.number)
 
 
-matchLi : Maybe Track -> Track -> Html Msg
-matchLi maybeSelected track =
-    li
-        [ style [ selectedStyle track maybeSelected ] ]
-        [ span [ onClick <| ToggleSelection track ]
-            [ text <|
-                toString track.cd
-                    ++ "#"
-                    ++ toString track.number
-                    ++ " "
-                    ++ track.artist
-                    ++ " - "
-                    ++ track.title
-                    ++ " ("
-                    ++ track.mix
-                    ++ ")"
-                    ++ " "
-                    ++ toString track.keyNumber
-                    ++ toString track.keyType
-                    ++ toString track.bpm
+trackRow : Maybe Track -> Track -> List (Html Msg) -> String -> Msg -> Html Msg
+trackRow maybeSelected track details actionLabel action =
+    li [ classList [ ( "track-row", True ), ( "is-selected", isSelected track maybeSelected ) ] ]
+        [ button
+            [ type_ "button"
+            , class "track-main"
+            , onClick <| ToggleSelection track
+            , attribute "aria-label" <| "Select " ++ track.artist ++ " — " ++ track.title
             ]
-        , span [ onClick <| AddTrack track.cd track.number ] [ text "+" ]
+            [ span [ class "track-title" ] [ text <| track.artist ++ " — " ++ track.title ]
+            , span [ class "track-meta" ]
+                [ text <|
+                    toString track.cd
+                        ++ "#"
+                        ++ toString track.number
+                        ++ "  ·  "
+                        ++ track.mix
+                        ++ "  ·  Key "
+                        ++ toString track.keyNumber
+                        ++ toString track.keyType
+                        ++ "  ·  "
+                        ++ toString track.bpm
+                        ++ " BPM"
+                ]
+            , span [ class "match-details" ] details
+            ]
+        , button
+            [ type_ "button"
+            , class <|
+                if actionLabel == "Remove" then
+                    "track-action remove-action"
+                else
+                    "track-action"
+            , onClick action
+            , attribute "aria-label" <| actionLabel ++ " " ++ track.artist ++ " — " ++ track.title
+            ]
+            [ text actionLabel ]
         ]
 
 
-matches : List Track -> List Track -> Maybe Track -> List Track
+type alias MatchInfo =
+    { track : Track
+    , bpmDelta : Float
+    , keyDelta : Int
+    , rank : Int
+    }
+
+
+matches : List Track -> List Track -> Maybe Track -> List MatchInfo
 matches library playlist maybeSelected =
     case maybeSelected of
         Just selected ->
@@ -258,9 +386,61 @@ matches library playlist maybeSelected =
                                     similar
                 )
                 library
+                |> List.map (matchInfo selected)
+                |> List.sortWith compareMatches
 
         Nothing ->
             []
+
+
+matchInfo : Track -> Track -> MatchInfo
+matchInfo selected track =
+    let
+        bpmDelta =
+            diffBpm track.bpm selected.bpm
+
+        keyDelta =
+            diffKeyNumber track.keyNumber selected.keyNumber
+
+        sameKey =
+            track.keyNumber == selected.keyNumber && track.keyType == selected.keyType
+
+        rank =
+            if sameKey && bpmDelta == 0 then
+                0
+            else if sameKey then
+                1
+            else if track.bpm == selected.bpm && track.keyNumber == selected.keyNumber then
+                2
+            else
+                3
+    in
+    MatchInfo track bpmDelta keyDelta rank
+
+
+compareMatches : MatchInfo -> MatchInfo -> Order
+compareMatches a b =
+    case compare a.rank b.rank of
+        EQ ->
+            case compare a.bpmDelta b.bpmDelta of
+                EQ ->
+                    case compare a.keyDelta b.keyDelta of
+                        EQ ->
+                            case compare (String.toLower a.track.artist) (String.toLower b.track.artist) of
+                                EQ ->
+                                    compare (String.toLower a.track.title) (String.toLower b.track.title)
+
+                                order ->
+                                    order
+
+                        order ->
+                            order
+
+                order ->
+                    order
+
+        order ->
+            order
 
 
 diffKeyNumber : Int -> Int -> Int
@@ -307,26 +487,14 @@ diffBpm a b =
             d * -1
 
 
-selectedStyle : Track -> Maybe Track -> ( String, String )
-selectedStyle track maybeSelected =
-    let
-        isSelected =
-            case maybeSelected of
-                Just selected ->
-                    selected.cd
-                        == track.cd
-                        && selected.number
-                        == track.number
+isSelected : Track -> Maybe Track -> Bool
+isSelected track maybeSelected =
+    case maybeSelected of
+        Just selected ->
+            selected.cd == track.cd && selected.number == track.number
 
-                Nothing ->
-                    False
-    in
-        case isSelected of
-            True ->
-                ( "border", "1px solid red" )
-
-            False ->
-                ( "border", "1px solid white" )
+        Nothing ->
+            False
 
 
 playlistLi : Maybe Track -> PlaylistTrack -> Html Msg
@@ -343,34 +511,13 @@ playlistLi maybeSelected playlistTrack =
 
         endPitch =
             playlistTrack.endPitch
-    in
-        li
-            [ style [ ( "list-style-type", "decimal" ), selectedStyle track maybeSelected ] ]
-            [ span [ onClick <| ToggleSelection track ]
-                [ text <|
-                    toString track.cd
-                        ++ "#"
-                        ++ toString track.number
-                        ++ " "
-                        ++ track.artist
-                        ++ " - "
-                        ++ track.title
-                        ++ " ("
-                        ++ track.mix
-                        ++ ")"
-                        ++ " "
-                        ++ toString track.keyNumber
-                        ++ toString track.keyType
-                        ++ toString track.bpm
-                        ++ " "
-                        ++ formatPitch beginPitch
-                        ++ "%"
-                        ++ " -> "
-                        ++ formatPitch endPitch
-                        ++ "%"
-                ]
-            , span [ onClick <| RemoveTrack index ] [ text "-" ]
+
+        pitchDetails =
+            [ span [ class "match-detail" ]
+                [ text <| formatPitch beginPitch ++ "% → " ++ formatPitch endPitch ++ "%" ]
             ]
+    in
+        trackRow maybeSelected track pitchDetails "Remove" (RemoveTrack index)
 
 
 formatPitch : Float -> String
@@ -440,8 +587,12 @@ update msg state =
 
                         Nothing ->
                             justSelected
+
             in
-                ( { state | selected = selected }, Cmd.none )
+                ( { state | selected = selected, activePanel = MatchesPanel }, Cmd.none )
+
+        ShowPanel panel ->
+            ( { state | activePanel = panel }, Cmd.none )
 
         LibraryFilter query ->
             ( { state | libraryFilter = query, selected = Nothing }, Cmd.none )
