@@ -9,8 +9,10 @@ Mix is a small Elm app for building a DJ playlist from a track library. It finds
 3. Use **Add** to place a track at the end of the Playlist.
 4. Select any playlist track to find the next match.
 5. Use **Remove** to take a track out of the Playlist.
+6. Give a playlist a name and choose **Save** to keep multiple playlists; use the menu to load one later.
+7. Use **Export Markdown** to download the ordered playlist as `mix-playlist.md`.
 
-The playlist also shows the pitch change at the start and end of each track.
+The playlist also shows the pitch change at the start and end of each track. Your current playlist and named playlists are saved automatically in your browser and restored the next time you open the app.
 
 ## Keyboard shortcuts
 

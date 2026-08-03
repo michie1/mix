@@ -1,13 +1,14 @@
-module Main exposing (main)
+port module Main exposing (main)
 
 import Browser
 import Browser.Dom
 import Browser.Events
-import Html exposing (Attribute, Html, button, div, h1, h2, input, li, node, p, span, text, ul)
+import Html exposing (Attribute, Html, button, div, h1, h2, input, li, node, option, p, select, span, text, ul)
 import Html.Events exposing (onClick, onInput)
-import Html.Attributes exposing (attribute, class, classList, id, placeholder, type_, value)
+import Html.Attributes exposing (attribute, class, classList, disabled, id, placeholder, type_, value)
 import List.Extra
 import Json.Decode
+import Json.Encode
 import Http
 import Task
 
@@ -22,6 +23,8 @@ type alias Model =
     , activePanel : Panel
     , cursor : Int
     , shortcutHelpOpen : Bool
+    , playlistName : String
+    , savedPlaylists : List SavedPlaylist
     }
 
 
@@ -56,15 +59,34 @@ type alias PlaylistTrack =
     }
 
 
-init : () -> ( Model, Cmd Msg )
-init _ =
+type alias SavedPlaylist =
+    { name : String
+    , tracks : List Track
+    }
+
+
+type alias StoredState =
+    { current : List Track
+    , saved : List SavedPlaylist
+    }
+
+
+init : Json.Decode.Value -> ( Model, Cmd Msg )
+init savedPlaylist =
+    let
+        storedState =
+            Json.Decode.decodeValue storedStateDecoder savedPlaylist
+                |> Result.withDefault { current = [], saved = [] }
+    in
     ( { library = []
-      , playlist = []
+      , playlist = storedState.current
       , libraryFilter = ""
       , selected = Nothing
       , activePanel = LibraryPanel
       , cursor = 0
       , shortcutHelpOpen = False
+      , playlistName = ""
+      , savedPlaylists = storedState.saved
       }
     , loadTracks
     )
@@ -80,6 +102,10 @@ type Msg
     | ToggleShortcutHelp
     | FocusResult (Result Browser.Dom.Error ())
     | LibraryFilter String
+    | ExportPlaylist
+    | PlaylistName String
+    | SavePlaylist
+    | LoadPlaylist String
     | LoadTracks
     | LoadedTracks (Result Http.Error (List Track))
 
@@ -168,9 +194,47 @@ view state =
                 ]
             , div [ panelClass state.activePanel PlaylistPanel ]
                 [ div [ class "panel-header" ]
-                    [ div []
+                    [ div [ class "playlist-header" ]
+                        [ div []
                         [ h2 [] [ text "Playlist" ]
                         , span [ class "count" ] [ text <| String.fromInt (List.length state.playlist) ]
+                        ]
+                        , button
+                            [ type_ "button"
+                            , class "export-button"
+                            , disabled (List.isEmpty state.playlist)
+                            , onClick ExportPlaylist
+                            ]
+                            [ text "Export Markdown" ]
+                        ]
+                    , div [ class "playlist-manager" ]
+                        [ input
+                            [ class "playlist-name-input"
+                            , value state.playlistName
+                            , placeholder "Playlist name"
+                            , attribute "aria-label" "Playlist name"
+                            , onInput PlaylistName
+                            ]
+                            []
+                        , button
+                            [ type_ "button"
+                            , class "save-button"
+                            , disabled (List.isEmpty state.playlist || String.isEmpty (String.trim state.playlistName))
+                            , onClick SavePlaylist
+                            ]
+                            [ text "Save" ]
+                        , select
+                            [ class "playlist-select"
+                            , value ""
+                            , attribute "aria-label" "Load a saved playlist"
+                            , disabled (List.isEmpty state.savedPlaylists)
+                            , onInput LoadPlaylist
+                            ]
+                            (option [ value "" ] [ text "Load playlist…" ]
+                                :: List.map
+                                    (\saved -> option [ value saved.name ] [ text saved.name ])
+                                    state.savedPlaylists
+                            )
                         ]
                     ]
                 , if List.isEmpty state.playlist then
@@ -622,6 +686,78 @@ formatPitch pitch =
             (toFloat (round (pitch * 5000)) * 2 / 100)
 
 
+playlistMarkdown : List Track -> String
+playlistMarkdown tracks =
+    let
+        trackLine playlistTrack =
+            let
+                track =
+                    playlistTrack.track
+
+                mixLabel =
+                    if String.isEmpty (String.trim track.mix) then
+                        ""
+                    else
+                        " (" ++ track.mix ++ ")"
+            in
+                String.fromInt (playlistTrack.index + 1)
+                    ++ ". **"
+                    ++ track.artist
+                    ++ " — "
+                    ++ track.title
+                    ++ "**"
+                    ++ mixLabel
+                    ++ " — "
+                    ++ String.fromFloat track.bpm
+                    ++ " BPM — Key "
+                    ++ String.fromInt track.keyNumber
+                    ++ keyTypeToString track.keyType
+                    ++ " — CD "
+                    ++ String.fromInt track.cd
+                    ++ " #"
+                    ++ String.fromInt track.number
+                    ++ " — Pitch "
+                    ++ formatPitch playlistTrack.beginPitch
+                    ++ "% → "
+                    ++ formatPitch playlistTrack.endPitch
+                    ++ "%"
+    in
+        "# Mix playlist\n\n"
+            ++ (playlist tracks |> List.map trackLine |> String.join "\n")
+            ++ "\n"
+
+
+trackEncoder : Track -> Json.Encode.Value
+trackEncoder track =
+    Json.Encode.object
+        [ ( "cd", Json.Encode.int track.cd )
+        , ( "number", Json.Encode.int track.number )
+        , ( "artist", Json.Encode.string track.artist )
+        , ( "title", Json.Encode.string track.title )
+        , ( "remix", Json.Encode.string track.mix )
+        , ( "bpm", Json.Encode.float track.bpm )
+        , ( "keyNumber", Json.Encode.int track.keyNumber )
+        , ( "keyType", Json.Encode.string (keyTypeToString track.keyType) )
+        ]
+
+
+persistState : Model -> Cmd Msg
+persistState state =
+    savePlaylist <|
+        Json.Encode.object
+            [ ( "current", Json.Encode.list trackEncoder state.playlist )
+            , ( "saved", Json.Encode.list savedPlaylistEncoder state.savedPlaylists )
+            ]
+
+
+savedPlaylistEncoder : SavedPlaylist -> Json.Encode.Value
+savedPlaylistEncoder saved =
+    Json.Encode.object
+        [ ( "name", Json.Encode.string saved.name )
+        , ( "tracks", Json.Encode.list trackEncoder saved.tracks )
+        ]
+
+
 panelShortcut : Panel -> String
 panelShortcut panel =
     case panel of
@@ -866,7 +1002,11 @@ update msg state =
                 nextCursor =
                     clampCursor (tracksForPanel state.activePanel stateWithPlaylist) state.cursor
             in
-                ( { stateWithPlaylist | cursor = nextCursor }, Cmd.none )
+                let
+                    nextState =
+                        { stateWithPlaylist | cursor = nextCursor }
+                in
+                    ( nextState, persistState nextState )
 
         RemoveTrack index ->
             let
@@ -879,7 +1019,56 @@ update msg state =
                 nextCursor =
                     clampCursor (tracksForPanel state.activePanel stateWithPlaylist) state.cursor
             in
-                ( { stateWithPlaylist | cursor = nextCursor }, Cmd.none )
+                let
+                    nextState =
+                        { stateWithPlaylist | cursor = nextCursor }
+                in
+                    ( nextState, persistState nextState )
+
+        ExportPlaylist ->
+            if List.isEmpty state.playlist then
+                ( state, Cmd.none )
+            else
+                ( state, exportMarkdown (playlistMarkdown state.playlist) )
+
+        PlaylistName name ->
+            ( { state | playlistName = name }, Cmd.none )
+
+        SavePlaylist ->
+            let
+                name =
+                    String.trim state.playlistName
+
+                withoutExisting =
+                    List.filter (\saved -> String.toLower saved.name /= String.toLower name) state.savedPlaylists
+
+                nextState =
+                    { state
+                        | playlistName = name
+                        , savedPlaylists = withoutExisting ++ [ { name = name, tracks = state.playlist } ]
+                    }
+            in
+                if String.isEmpty name || List.isEmpty state.playlist then
+                    ( state, Cmd.none )
+                else
+                    ( nextState, persistState nextState )
+
+        LoadPlaylist name ->
+            case List.Extra.find (\saved -> saved.name == name) state.savedPlaylists of
+                Just saved ->
+                    let
+                        nextState =
+                            { state
+                                | playlist = saved.tracks
+                                , playlistName = saved.name
+                                , selected = Nothing
+                                , cursor = 0
+                            }
+                    in
+                        ( nextState, persistState nextState )
+
+                Nothing ->
+                    ( state, Cmd.none )
 
         ToggleSelection track ->
             ( toggleTrackSelection track state, Cmd.none )
@@ -954,7 +1143,7 @@ keyEventDecoder =
         (Json.Decode.field "metaKey" Json.Decode.bool)
 
 
-main : Program () Model Msg
+main : Program Json.Decode.Value Model Msg
 main =
     Browser.element
         { init = init
@@ -962,6 +1151,12 @@ main =
         , subscriptions = subscriptions
         , view = view
         }
+
+
+port savePlaylist : Json.Encode.Value -> Cmd msg
+
+
+port exportMarkdown : String -> Cmd msg
 
 
 loadTracks : Cmd Msg
@@ -1026,3 +1221,20 @@ trackDecoder =
 tracksDecoder : Json.Decode.Decoder (List Track)
 tracksDecoder =
     Json.Decode.at [ "tracks" ] (Json.Decode.list trackDecoder)
+
+
+savedPlaylistDecoder : Json.Decode.Decoder SavedPlaylist
+savedPlaylistDecoder =
+    Json.Decode.map2 SavedPlaylist
+        (Json.Decode.field "name" Json.Decode.string)
+        (Json.Decode.field "tracks" (Json.Decode.list trackDecoder))
+
+
+storedStateDecoder : Json.Decode.Decoder StoredState
+storedStateDecoder =
+    Json.Decode.oneOf
+        [ Json.Decode.map2 StoredState
+            (Json.Decode.field "current" (Json.Decode.list trackDecoder))
+            (Json.Decode.field "saved" (Json.Decode.list savedPlaylistDecoder))
+        , Json.Decode.map (\tracks -> { current = tracks, saved = [] }) (Json.Decode.list trackDecoder)
+        ]
