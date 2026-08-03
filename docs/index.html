@@ -19,6 +19,8 @@
       body {
         margin: 0;
         min-width: 320px;
+        min-height: 100vh;
+        min-height: 100dvh;
       }
 
       button,
@@ -35,6 +37,7 @@
         grid-template-rows: auto auto minmax(0, 1fr);
         gap: 14px;
         height: 100vh;
+        height: 100dvh;
         padding: 18px;
       }
 
@@ -382,7 +385,19 @@
       @media (max-width: 800px) {
         .app-shell {
           gap: 10px;
-          padding: 12px;
+          min-height: 100vh;
+          min-height: 100dvh;
+          padding: max(12px, env(safe-area-inset-top))
+            max(12px, env(safe-area-inset-right))
+            max(12px, env(safe-area-inset-bottom))
+            max(12px, env(safe-area-inset-left));
+        }
+
+        .shortcuts-button,
+        .shortcut-close,
+        .panel-tab,
+        .track-action {
+          min-height: 44px;
         }
 
         .panel-tabs {
@@ -394,7 +409,7 @@
         }
 
         .panel-tab {
-          padding: 7px;
+          padding: 9px 7px;
           background: transparent;
           border: 0;
           border-radius: 6px;
@@ -423,7 +438,92 @@
         }
 
         .shortcut-backdrop {
-          padding: 54px 12px 12px;
+          align-items: center;
+          padding: max(12px, env(safe-area-inset-top))
+            max(12px, env(safe-area-inset-right))
+            max(12px, env(safe-area-inset-bottom))
+            max(12px, env(safe-area-inset-left));
+          overflow-y: auto;
+        }
+
+        .shortcut-dialog {
+          max-height: 100%;
+          overflow-y: auto;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .app-shell {
+          gap: 8px;
+          padding-top: max(10px, env(safe-area-inset-top));
+        }
+
+        .app-header p {
+          display: none;
+        }
+
+        .shortcuts-button {
+          min-width: 44px;
+          padding: 7px 9px;
+          font-size: 0;
+        }
+
+        .shortcuts-button::before {
+          content: "?";
+          font-size: 1rem;
+        }
+
+        .panel-header {
+          padding: 12px;
+        }
+
+        .track-list {
+          padding: 4px;
+        }
+
+        .track-row {
+          gap: 8px;
+          padding: 8px 6px 8px 9px;
+        }
+
+        .playlist-list .track-row {
+          padding-left: 29px;
+        }
+
+        .track-main {
+          min-height: 44px;
+          justify-content: center;
+        }
+
+        .track-title,
+        .track-meta {
+          white-space: normal;
+        }
+
+        .track-title {
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
+        }
+
+        .track-meta {
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
+        }
+
+        .match-details {
+          flex-wrap: wrap;
+        }
+
+        .track-action {
+          min-width: 58px;
+          padding: 8px;
+        }
+
+        .shortcut-list li {
+          grid-template-columns: minmax(84px, auto) 1fr;
+          gap: 8px;
         }
       }
     </style>
