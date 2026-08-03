@@ -12,6 +12,15 @@ Mix is a small Elm app for building a DJ playlist from a track library. It finds
 
 The playlist also shows the pitch change at the start and end of each track.
 
+## Keyboard shortcuts
+
+1. Press `1`, `2`, or `3` to open Library, Playlist, or Matches.
+2. Press `/` to search the Library.
+3. Use `Up`/`K` and `Down`/`J` to move between tracks.
+4. Press `Enter` to select a track and `A` to add it.
+5. Press `Delete` or `Backspace` to remove the current Playlist track.
+6. Press `?` to open the shortcut guide and `Escape` to close or clear.
+
 ## Run locally
 
 Install the project packages, then start the development server:

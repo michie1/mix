@@ -50,6 +50,31 @@
         font-size: 0.85rem;
       }
 
+      .app-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      .shortcuts-button,
+      .shortcut-close {
+        padding: 7px 10px;
+        color: #475467;
+        background: #fff;
+        border: 1px solid #d6dbe4;
+        border-radius: 7px;
+        cursor: pointer;
+        font-size: 0.76rem;
+        font-weight: 600;
+      }
+
+      .shortcuts-button:hover,
+      .shortcut-close:hover {
+        color: #4338ca;
+        border-color: #a5b4fc;
+      }
+
       .workspace {
         display: grid;
         grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr) minmax(0, 1.15fr);
@@ -170,6 +195,10 @@
         border-left-color: #4f46e5;
       }
 
+      .track-row.is-cursor {
+        box-shadow: inset 0 0 0 1px #818cf8;
+      }
+
       .track-main {
         display: flex;
         min-width: 0;
@@ -288,6 +317,68 @@
         display: none;
       }
 
+      .shortcut-backdrop {
+        position: fixed;
+        z-index: 20;
+        inset: 0;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-end;
+        padding: 64px 18px 18px;
+        background: rgba(15, 23, 42, 0.18);
+      }
+
+      .shortcut-dialog {
+        width: min(360px, 100%);
+        padding: 16px;
+        background: #fff;
+        border: 1px solid #dfe3ea;
+        border-radius: 10px;
+        box-shadow: 0 16px 40px rgba(16, 24, 40, 0.2);
+      }
+
+      .shortcut-dialog-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .shortcut-dialog h2 {
+        margin: 0;
+        font-size: 1rem;
+      }
+
+      .shortcut-list {
+        display: grid;
+        gap: 9px;
+        margin: 16px 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .shortcut-list li {
+        display: grid;
+        grid-template-columns: 112px 1fr;
+        align-items: center;
+        gap: 12px;
+        color: #475467;
+        font-size: 0.8rem;
+      }
+
+      .shortcut-list kbd {
+        width: fit-content;
+        padding: 3px 6px;
+        color: #344054;
+        background: #f8fafc;
+        border: 1px solid #d6dbe4;
+        border-bottom-width: 2px;
+        border-radius: 5px;
+        font-family: inherit;
+        font-size: 0.72rem;
+        font-weight: 600;
+      }
+
       @media (max-width: 800px) {
         .app-shell {
           gap: 10px;
@@ -329,6 +420,10 @@
 
         .panel.is-active {
           display: flex;
+        }
+
+        .shortcut-backdrop {
+          padding: 54px 12px 12px;
         }
       }
     </style>
